@@ -1,0 +1,18 @@
+# Ignore everthing inside these dirs
+data/raw/*
+data/reference/*
+results/*
+
+!data/raw/.gitkeep
+!data/reference/.gitkeep
+!results/.gitkeep
+
+# Ignore log and temp files
+*.log
+*.tmp
+.nextflow/
+work/
+
+# Ignore environment files
+.DS_Store
+Thumbs.db
