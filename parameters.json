@@ -1,0 +1,27 @@
+{
+    "main_sample_dir": "path/to/samples/directory",
+
+    "trimmomatic": {
+        "adapters_file": "path/to/your/adapters_file.fa",
+        "threads": 10,
+        "out_dir": "path/to/trimmomatic/out_dir"
+    },
+    
+    "fastQC": {
+        "post_trimming_out_dir": "path/to/fastQC/post/trimming/out_directory",
+        "threads": 10
+    },
+
+    "STAR": {
+        "out_dir": "path/to/STAR/out_dir",
+        "threads": 4
+    },
+
+    "index_building": {
+        "reference_genome": "path/to/your/reference_genome.fa",
+        "gtf_file": "path/to/the/annotation_file.gtf",
+        "out_dir_STAR_index": "path/to/the/STAR_index/output_directory",
+        "out_dir_RSEM_index": "path/to/the/RSEM_index/output_directory",
+        "threads": 10
+    }
+}
