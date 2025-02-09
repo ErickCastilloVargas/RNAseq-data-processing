@@ -1,22 +1,25 @@
 nextflow.enable.dsl=2
 
 process fastQC_post_trimming {
-    // Define input: List of directories (sample directories) within the trimmomatic output directory
+    // Define inputs:
     input:
-    path sample_dir from file("${params.trimmomatic.out_dir}/*/")
+    path sample_dir from file("${params.out_dir}/trimmomatic_trimming/*/")
     val threads from params.fastQC.threads
 
     // Define output: FastQC outputs post trimming
     output:
-    path "${params.fastQC.post_trimming_out_dir}/*"
+    path "${params.out_dir}/fastQC_metrics/${sample_dir.name}/*"
 
     // Define the script
     script:
     """
+    # Load the module for fastQC
+    module load FastQC
+
     echo "Processing sample from directory: ${sample_dir}"
 
     # Output directory
-    out_dir="${params.fastQC.post_trimming_out_dir}"
+    out_dir="${params.out_dir}/fastQC_metrics/${sample_dir.name}"
     mkdir -p $out_dir
 
     # Input FASTQ files

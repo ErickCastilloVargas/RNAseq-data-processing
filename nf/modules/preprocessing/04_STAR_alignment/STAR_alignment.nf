@@ -1,28 +1,31 @@
 nextflow.enable.dsl=2
 
 process star_alignment {
-    // Define input: List of directories (sample directories) within the trimmomatic output directory
+    // Define inputs:
     input:
-    path sample_dir from file("${params.trimmomatic.out_dir}/*/")
-    path star_index from params.index_building.out_dir_STAR_index
+    path sample_dir from file("${params.out_dir}/trimmomatic_trimming/*/")
+    path star_index from ${params.out_dir}/star_index
     val threads from params.STAR.threads
 
     // Define output: STAR alignment outputs
     output:
-    path "${params.STAR.out_dir}/*"
+    path "${params.out_dir}/STAR_alignment/${sample_dir.name}/*"
 
     // Define the script
     script:
     """
+    # Load the module for STAR
+    module load STAR
+
     echo "Processing sample from directory: ${sample_dir}"
 
     # Output directory
-    out_dir="${params.STAR.out_dir}/${sample_dir.name}"
+    out_dir="${params.out_dir}/STAR_alignment/${sample_dir.name}"
     mkdir -p $out_dir
 
     # Input FASTQ files
-    fastq1="${params.trimmomatic.out_dir}/${sample_dir.name}/${sample_dir.name}_1_paired.fastq.gz"
-    fastq2="${params.trimmomatic.out_dir}/${sample_dir.name}/${sample_dir.name}_2_paired.fastq.gz"
+    fastq1="${sample_dir}/${sample_dir.name}/${sample_dir.name}_1_paired.fastq.gz"
+    fastq2="${sample_dir}/${sample_dir.name}/${sample_dir.name}_2_paired.fastq.gz"
 
     # Input genome index
     genome_index="$star_index

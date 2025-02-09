@@ -2,20 +2,20 @@ nextflow.enable.dsl=2
 
 process adapters_trimming {
 
-    // Define input: List of directories (sample directories) within the main directory
+    // Define inputs:
     input:
     path sample_dir from file("${params.main_sample_dir}/*/")
     val threads from params.trimmomatic.threads
     path adapters_file from params.trimmomatic.adapters_file
 
-    // Define output: Trimmomatic outputs
+    // Define output: adapters and low quality read fragments removal from samples 
     output:
-    path "${params.trimmomatic.out_dir}/${sample_dir.name}/*"
+    path "${params.out_dir}/trimmomatic_trimming/${sample_dir.name}/*"
 
     // Define the script
     script:
     """
-    # Load the module for Trimmomatic (this can be adjusted depending on your cluster setup)
+    # Load the module for Trimmomatic
     module load Trimmomatic
 
     echo "Processing sample from directory: ${sample_dir}"
@@ -25,7 +25,7 @@ process adapters_trimming {
     fastq2="${sample_dir}/${sample_dir.name}_2.fastq.gz"
     
     # Output directory
-    out_dir="${params.trimmomatic.out_dir}/${sample_dir.name}"
+    out_dir="${params.out_dir}/trimmomatic_trimming/${sample_dir.name}"
     mkdir -p $out_dir
 
     # Run Trimmomatic to remove adapters
