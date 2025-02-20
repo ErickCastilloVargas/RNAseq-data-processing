@@ -13,10 +13,13 @@ process fastQC_post_trimming {
     // Define the script
     script:
     """
+    # Create the log dir 
+    mkdir -p ${params.out_dir}/logs/fastQC_post_trimming
+    
     # Load the module for fastQC
     module load FastQC
 
-    echo "Processing sample from directory: ${sample_dir}"
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] Processing sample: ${sample_dir.name}"
 
     # Output directory
     out_dir="${params.out_dir}/fastQC_metrics/${sample_dir.name}"
@@ -31,6 +34,6 @@ process fastQC_post_trimming {
         ${fastq2} \
         -o ${out_dir}/
 
-    echo "FastQC post trimming of sample ${sample_dir.name} done"
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] FastQC post trimming of sample ${sample_dir.name} done"
     """
 }

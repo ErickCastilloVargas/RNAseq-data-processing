@@ -14,10 +14,13 @@ process star_alignment {
     // Define the script
     script:
     """
+    # Create the log dir
+    mkdir -p ${params.out_dir}/logs/star_alignment
+
     # Load the module for STAR
     module load STAR
 
-    echo "Processing sample from directory: ${sample_dir}"
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] Processing sample: ${sample_dir.name}"
 
     # Output directory
     out_dir="${params.out_dir}/STAR_alignment/${sample_dir.name}"
@@ -64,6 +67,6 @@ process star_alignment {
         --outSAMattributes NH HI AS nM NM ch\
         --outSAMattrRGline ID:${sample_dir.name} SM:${sample_dir.name}
 
-    echo "Sample ${sample_dir.name} aligned"
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] Sample ${sample_dir.name} aligned"
     """
 }

@@ -1,7 +1,6 @@
 nextflow.enable.dsl=2
 
 process adapters_trimming {
-
     // Define inputs:
     input:
     path sample_dir from file("${params.main_sample_dir}/*/")
@@ -15,10 +14,13 @@ process adapters_trimming {
     // Define the script
     script:
     """
+    # Create the log dir
+    mkdir -p ${params.out_dir}/logs/adapters_trimming
+
     # Load the module for Trimmomatic
     module load Trimmomatic
 
-    echo "Processing sample from directory: ${sample_dir}"
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] Processing sample: ${sample_dir.name}"
 
     # Input FASTQ files (paired-end reads)
     fastq1="${sample_dir}/${sample_dir.name}_1.fastq.gz"
@@ -37,9 +39,8 @@ process adapters_trimming {
         $out_dir/${sample_dir.name}_2_paired.fastq.gz \
         $out_dir/${sample_dir.name}_2_unpaired.fastq.gz \
         ILLUMINACLIP:${adapters_file}:2:30:10 \
-        HEADCROP:12 \
         LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
 
-    echo "All adapters are removed from ${sample_dir.name}!"
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] All adapters are removed from ${sample_dir.name}!"
     """
 }

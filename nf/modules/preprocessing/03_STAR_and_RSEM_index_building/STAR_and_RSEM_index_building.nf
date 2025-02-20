@@ -15,9 +15,14 @@ process star_and_RSEM_index_building {
     // Define the script
     script:
     """
+    # Create the log dir 
+    mkdir -p ${params.out_dir}/logs/star_and_RSEM_index_building
+
     # Load the module for STAR and RSEM
     module load STAR
     module load RSEM
+
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] Starting to create STAR index"
 
     # STAR index generation
     STAR --runMode genomeGenerate \
@@ -27,7 +32,9 @@ process star_and_RSEM_index_building {
         --sjdbOverhang 100 \
         --runThreadN $threads
      
-    echo "STAR index created"
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] STAR index created"
+
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] Starting to create RSEM index"
 
     # RSEM index generation
     rsem-prepare-reference --num-threads $threads \
@@ -35,6 +42,6 @@ process star_and_RSEM_index_building {
         $reference_genome \
         ${params.out_dir}/rsem_index/rsem_reference
     
-    echo "RSEM index created"
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] RSEM index created"
     """
 }

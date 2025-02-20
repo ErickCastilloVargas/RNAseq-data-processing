@@ -1,5 +1,6 @@
 nextflow.enable.dsl=2
 
+process qc_post_alignment {
     // Define inputs:
     input:
     path star_sample_dir from file("${params.out_dir}/STAR_alignment/*/")
@@ -12,10 +13,13 @@ nextflow.enable.dsl=2
     // Define the script
     script:
     """
+    # Create the log dir
+    mkdir -p ${params.out_dir}/logs/qc_post_alignment
+    
     # Load the module for RNAseQC
     module load RNA-SeQC
 
-    echo "Processing sample from directory: ${star_sample_dir}"
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] Processing sample: ${star_sample_dir.name}"
 
     # Output directory
     out_dir="${params.out_dir}/rnaseQC_metrics/${star_sample_dir.name}"
@@ -26,5 +30,6 @@ nextflow.enable.dsl=2
 
     rnaseqc ${collapsed_gtf_file} ${star_bam_file} --sample ${star_sample_dir.name} --stranded rf --verbose ${out_dir}/
 
-    echo "RNAseQC of sample ${star_sample_dir.name} done"
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] RNAseQC of sample ${star_sample_dir.name} done"
     """
+}

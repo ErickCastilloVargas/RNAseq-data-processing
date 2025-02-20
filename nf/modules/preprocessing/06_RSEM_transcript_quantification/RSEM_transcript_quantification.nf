@@ -1,5 +1,6 @@
 nextflow.enable.dsl=2
 
+process rsem_transcript_quantification {
     // Define inputs:
     input:
     path star_sample_dir from file("${params.out_dir}/STAR_alignment/*/")
@@ -13,10 +14,13 @@ nextflow.enable.dsl=2
     // Define the script
     script:
     """
+    # Create the log dir
+    mkdir -p ${params.out_dir}/logs/rsem_transcript_quantification
+
     # Load the module for RSEM
     module load RSEM
 
-    echo "Processing sample from directory: ${star_sample_dir}"
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] Processing sample: ${star_sample_dir.name}"
 
     # STAR .bam file aligned to transcriptome
     star_bam_file="${star_sample_dir}/${star_sample_dir.name}/${star_sample_dir.name}_Aligned.toTranscriptome.out.bam"
@@ -36,5 +40,6 @@ nextflow.enable.dsl=2
         ${star_bam_file} \
         ${rsem_index}/rsem_reference ${out_dir}/${star_sample_dir.name}
 
-    echo "Transcript quantification for sample ${star_sample_dir.name} finished"
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] Transcript quantification for sample ${star_sample_dir.name} finished"
     """
+}
