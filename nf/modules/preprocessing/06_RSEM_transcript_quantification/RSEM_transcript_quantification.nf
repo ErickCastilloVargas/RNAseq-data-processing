@@ -1,10 +1,12 @@
+#!/usr/bin/env nextflow
+
 nextflow.enable.dsl=2
 
 process rsem_transcript_quantification {
     // Define inputs:
     input:
     path star_sample_dir from file("${params.out_dir}/STAR_alignment/*/")
-    path rsem_index from params.index_building.out_dir_RSEM_index
+    path rsem_index from ${params.out_dir}/rsem_index
     val threads from params.rsem.threads
 
     // Define output: RSEM transcript quantification

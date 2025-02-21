@@ -1,3 +1,5 @@
+#!/usr/bin/env nextflow
+
 nextflow.enable.dsl=2
 
 process fastQC_post_trimming {
@@ -26,8 +28,8 @@ process fastQC_post_trimming {
     mkdir -p $out_dir
 
     # Input FASTQ files
-    fastq1="${params.trimmomatic.out_dir}/${sample_dir.name}/${sample_dir.name}_1_paired.fastq.gz"
-    fastq2="${params.trimmomatic.out_dir}/${sample_dir.name}/${sample_dir.name}_2_paired.fastq.gz"
+    fastq1="${sample_dir}/${sample_dir.name}/${sample_dir.name}_1_paired.fastq.gz"
+    fastq2="${sample_dir}/${sample_dir.name}/${sample_dir.name}_2_paired.fastq.gz"
 
     fastqc -t ${threads} \
         ${fastq1} \
