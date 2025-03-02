@@ -5,8 +5,7 @@ nextflow.enable.dsl=2
 process qc_post_alignment {
     // Define inputs:
     input:
-    path star_sample_dir from file("${params.out_dir}/STAR_alignment/*/")
-    path collapsed_gtf_file from params.rnaseQC.collapsed_gtf_file
+    path star_sample_dir from channel.fromPath("${params.out_dir}/STAR_alignment/*/")
 
     // Define output: rnaseQC quality control of the STAR alignment outputs
     output:
@@ -30,7 +29,7 @@ process qc_post_alignment {
     # Star .bam file sorted by coordinates
     star_bam_file="${star_sample_dir}/${star_sample_dir.name}/${star_sample_dir.name}_Aligned.sortedByCoord.out.bam"
 
-    rnaseqc ${collapsed_gtf_file} ${star_bam_file} --sample ${star_sample_dir.name} --stranded rf --verbose ${out_dir}/
+    rnaseqc ${params.rnaseQC.collapsed_gtf_file} ${star_bam_file} --sample ${star_sample_dir.name} --stranded rf --verbose ${out_dir}/
 
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] RNAseQC of sample ${star_sample_dir.name} done"
     """

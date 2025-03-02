@@ -5,9 +5,8 @@ nextflow.enable.dsl=2
 process star_alignment {
     // Define inputs:
     input:
-    path sample_dir from file("${params.out_dir}/trimmomatic_trimming/*/")
-    path star_index from ${params.out_dir}/star_index
-    val threads from params.STAR.threads
+    path sample_dir from channel.fromPath("${params.out_dir}/trimmomatic_trimming/*/")
+    path star_index from channel.fromPath("${params.out_dir}/star_index")
 
     // Define output: STAR alignment outputs
     output:
@@ -32,13 +31,10 @@ process star_alignment {
     fastq1="${sample_dir}/${sample_dir.name}/${sample_dir.name}_1_paired.fastq.gz"
     fastq2="${sample_dir}/${sample_dir.name}/${sample_dir.name}_2_paired.fastq.gz"
 
-    # Input genome index
-    genome_index="$star_index"
-
     # Do the STAR alignement 
     STAR --runMode alignReads \
-        --genomeDir $genome_index \
-        --runThreadN ${threads} \
+        --genomeDir $star_index \
+        --runThreadN ${params.STAR.threads} \
         --twopassMode Basic \
         --genomeChrBinNbits 15 \
         --outFilterMultimapNmax 20 \
@@ -76,9 +72,8 @@ process star_alignment {
 process star_alignment_no_adapter_trimming {
     // Define inputs:
     input:
-    path sample_dir from file("${params.main_sample_dir}/*/")
-    path star_index from ${params.out_dir}/star_index
-    val threads from params.STAR.threads
+    path sample_dir from channel.fromPath("${params.main_sample_dir}/*/")
+    path star_index from channel.fromPath("${params.out_dir}/star_index")
 
     // Define output: STAR alignment outputs
     output:
@@ -103,13 +98,10 @@ process star_alignment_no_adapter_trimming {
     fastq1="${sample_dir}/${sample_dir.name}/${sample_dir.name}_1_paired.fastq.gz"
     fastq2="${sample_dir}/${sample_dir.name}/${sample_dir.name}_2_paired.fastq.gz"
 
-    # Input genome index
-    genome_index="$star_index"
-
     # Do the STAR alignement 
     STAR --runMode alignReads \
-        --genomeDir $genome_index \
-        --runThreadN ${threads} \
+        --genomeDir $star_index \
+        --runThreadN ${params.STAR.threads} \
         --twopassMode Basic \
         --genomeChrBinNbits 15 \
         --outFilterMultimapNmax 20 \
@@ -143,11 +135,3 @@ process star_alignment_no_adapter_trimming {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] Sample ${sample_dir.name} aligned"
     """
 }
-
-Corrected some minor errors and created the workflow for the preprocessing of the data
-
-- Fixed missing closing quote in `STAR_alignment.nf`
-- Corrected paths for `fastq1` and `fastq2` in `FastQC_post_trimming.nf`
-- Ensured all modules in the preprocessing directory have correctly defined inputs and outputs
-- Updated `parameters.json` to include missing `params.out_dir_RSEM_index`
-- Added workflow steps in `preprocessing.nf`

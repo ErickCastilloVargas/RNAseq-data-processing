@@ -5,9 +5,8 @@ nextflow.enable.dsl=2
 process rsem_transcript_quantification {
     // Define inputs:
     input:
-    path star_sample_dir from file("${params.out_dir}/STAR_alignment/*/")
-    path rsem_index from ${params.out_dir}/rsem_index
-    val threads from params.rsem.threads
+    path star_sample_dir from channel.fromPath("${params.out_dir}/STAR_alignment/*/")
+    path rsem_index from channel.fromPath(${params.out_dir}/rsem_index)
 
     // Define output: RSEM transcript quantification
     output:
@@ -32,7 +31,7 @@ process rsem_transcript_quantification {
     mkdir -p $out_dir
 
     rsem-calculate-expression \
-        --num-threads ${threads} \
+        --num-threads ${params.rsem.threads} \
         --fragment-length-max 1000 \
         --append-names \
         --no-bam-output \
