@@ -51,6 +51,9 @@ process multiQC_post_trimming {
     // Define the script
     script:
     """
+    # Create the log dir
+    mkdir -p ${params.out_dir}/logs/multiQC_post_trimming
+
     # Load the required module
     module load MultiQC
 
