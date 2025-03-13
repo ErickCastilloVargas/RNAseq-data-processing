@@ -9,7 +9,7 @@ process fastQC_post_trimming {
 
     // Define output: FastQC outputs post trimming
     output:
-    path "${params.out_dir}/fastQC_reports/*"
+    path "${params.out_dir}/fastQC_reports_post_trimming/*"
 
     // Define the script
     script:
@@ -23,7 +23,7 @@ process fastQC_post_trimming {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] Processing sample: ${sample_dir.name}"
 
     # Output directory
-    out_dir="${params.out_dir}/fastQC_reports/"
+    out_dir="${params.out_dir}/fastQC_reports_post_trimming"
     mkdir -p $out_dir
 
     # Input FASTQ files
@@ -42,11 +42,11 @@ process fastQC_post_trimming {
 process multiQC_post_trimming {
     // Define inputs:
     input:
-    path fastQC_reports from channel.fromPath("${params.out_dir}/fastQC_reports")
+    path fastQC_reports from channel.fromPath("${params.out_dir}/fastQC_reports_post_trimming")
 
     // Define output: FastQC outputs post trimming
     output:
-    path "${params.out_dir}/multiQC_reports/*"
+    path "${params.out_dir}/multiQC_reports_post_trimming/*"
 
     // Define the script
     script:
@@ -57,12 +57,16 @@ process multiQC_post_trimming {
     # Load the required module
     module load MultiQC
 
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] Starting multiQC post trimming ..."
+
     # Output dir for the multiQC reports
-    out_dir="${params.out_dir}/multiQC_reports"
+    out_dir="${params.out_dir}/multiQC_reports_post_trimming"
     mkdir -p "$out_dir"  
 
     # MultiQC for forward and reverse reads (they are paired-end)
     multiqc ${fastQC_reports}/*_1_paired_fastqc.zip -o ${out_dir} -n reports_1_forward_reads
     multiqc ${fastQC_reports}/*_2_paired_fastqc.zip -o ${out_dir} -n reports_2_reverse_reads
+
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] MultiQC post trimming done"
     """
 }
