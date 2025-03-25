@@ -1,29 +1,23 @@
 {
     "main_sample_dir": "path/to/samples/directory",
-
     "trimmomatic": {
         "adapters_file": "path/to/your/adapters_file.fa",
         "threads": 10
     },
-    
     "fastQC": {
         "threads": 10
     },
-
     "STAR": {
         "threads": 4
     },
-
     "index_building": {
         "reference_genome": "path/to/your/reference_genome.fa",
         "gtf_file": "path/to/the/annotation_file.gtf",
         "threads": 10
     },
-
     "rnaseQC": {
         "collapsed_gtf_file": "path/to/the/collapsed_gtf_file.gtf"
     },
-
     "rsem": {
         "threads": 10
     }
