@@ -14,7 +14,6 @@ process fastQC_raw_data {
     tuple val(SRR), path(fastq_files)
 
     output:
-    //path "*.{zip,html}", emit: "zip_files"
     path "*.zip", emit: "zip_files"
     path "*.html"
     path "*.{out,err}"

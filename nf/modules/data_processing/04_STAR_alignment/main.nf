@@ -3,135 +3,116 @@
 nextflow.enable.dsl=2
 
 process star_alignment {
-    // Define inputs:
-    input:
-    path sample_dir from channel.fromPath("${params.out_dir}/trimmomatic_trimming/*/")
-    path star_index from channel.fromPath("${params.out_dir}/star_index")
+    clusterOptions = { 
+        "--cpus-per-task=${params.STAR.threads} --output=STAR_${SRR}.out --error=STAR_${SRR}.err" 
+    }
+    publishDir "results/STAR_alignment", pattern: "*.out.bam"
+    publishDir "results/logs/STAR", pattern: "*.{out,err}"
 
-    // Define output: STAR alignment outputs
+    input:
+    tuple val(SRR), path(fastq_files)
+    path star_index
+
     output:
-    path "${params.out_dir}/STAR_alignment/${sample_dir.name}/*"
+    tuple val(SRR), path("*.out.bam"), emit: "bam_files"
 
     // Define the script
     script:
     """
-    # Create the log dir
-    mkdir -p ${params.out_dir}/logs/star_alignment
-
-    # Load the module for STAR
     module load STAR
 
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] Processing sample: ${sample_dir.name}"
+    echo "[\$(date '+%Y-%m-%d %H:%M:%S')] Processing sample: ${SRR}"
 
-    # Output directory
-    out_dir="${params.out_dir}/STAR_alignment/${sample_dir.name}"
-    mkdir -p $out_dir
+    STAR --runMode alignReads \\
+        --genomeDir $star_index \\
+        --runThreadN ${params.STAR.threads} \\
+        --twopassMode Basic \\
+        --outFilterMultimapNmax 20 \\
+        --alignSJoverhangMin 8 \\
+        --alignSJDBoverhangMin 1 \\
+        --outFilterMismatchNmax 999 \\
+        --outFilterMismatchNoverLmax 0.1 \\
+        --alignIntronMin 20 \\
+        --alignIntronMax 1000000 \\
+        --alignMatesGapMax 1000000 \\
+        --outFilterType BySJout \\
+        --outFilterScoreMinOverLread 0.33 \\
+        --outFilterMatchNminOverLread 0.33 \\
+        --limitSjdbInsertNsj 1200000 \\
+        --readFilesIn $fastq_files \\
+        --readFilesCommand gunzip -c \\
+        --outFileNamePrefix ${SRR}_ \\
+        --outSAMstrandField intronMotif \\
+        --alignSoftClipAtReferenceEnds Yes \\
+        --quantMode TranscriptomeSAM \\
+        --outSAMtype BAM Unsorted \\
+        --outSAMunmapped Within \\
+        --genomeLoad NoSharedMemory \\
+        --chimSegmentMin 15 \\
+        --chimJunctionOverhangMin 15 \\
+        --chimOutType Junctions WithinBAM SoftClip \\
+        --chimMainSegmentMultNmax 1 \\
+        --outSAMattributes NH HI AS nM NM ch \\
+        --outSAMattrRGline ID:${SRR} SM:${SRR}
 
-    # Input FASTQ files
-    fastq1="${sample_dir}/${sample_dir.name}/${sample_dir.name}_1_paired.fastq.gz"
-    fastq2="${sample_dir}/${sample_dir.name}/${sample_dir.name}_2_paired.fastq.gz"
-
-    # Do the STAR alignement 
-    STAR --runMode alignReads \
-        --genomeDir $star_index \
-        --runThreadN ${params.STAR.threads} \
-        --twopassMode Basic \
-        --genomeChrBinNbits 15 \
-        --outFilterMultimapNmax 20 \
-        --alignSJoverhangMin 8 \
-        --alignSJDBoverhangMin 1 \
-        --outFilterMismatchNmax 999 \
-        --outFilterMismatchNoverLmax 0.1 \
-        --alignIntronMin 20 \
-        --alignIntronMax 1000000 \
-        --alignMatesGapMax 1000000 \
-        --outFilterType BySJout \
-        --outFilterScoreMinOverLread 0.33 \
-        --outFilterMatchNminOverLread 0.33 \
-        --limitSjdbInsertNsj 1200000 \
-        --readFilesIn $fastq1 $fastq2 \
-        --readFilesCommand gunzip -c \
-        --outFileNamePrefix ${out_dir}/${sample_dir.name}_ \
-        --outSAMstrandField intronMotif \
-        --alignSoftClipAtReferenceEnds Yes \
-        --quantMode TranscriptomeSAM \
-        --outSAMtype BAM Unsorted \
-        --outSAMunmapped Within \
-        --genomeLoad NoSharedMemory \
-        --chimSegmentMin 15 \
-        --chimJunctionOverhangMin 15 \
-        --chimOutType Junctions WithinBAM SoftClip \
-        --chimMainSegmentMultNmax 1 \
-        --outSAMattributes NH HI AS nM NM ch\
-        --outSAMattrRGline ID:${sample_dir.name} SM:${sample_dir.name}
-
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] Sample ${sample_dir.name} aligned"
+    echo "[\$(date '+%Y-%m-%d %H:%M:%S')] Sample ${SRR} aligned"
     """
 }
 
 process star_alignment_no_adapter_trimming {
+    clusterOptions = { 
+        "--cpus-per-task=${params.STAR.threads} --output=STAR_${SRR}.out --error=STAR_${SRR}.err" 
+    }
+    publishDir "results/STAR_alignment", pattern: "*.out.bam"
+    publishDir "results/logs/STAR", pattern: "*.{out,err}"
+
     // Define inputs:
     input:
-    path sample_dir from channel.fromPath("${params.main_sample_dir}/*/")
-    path star_index from channel.fromPath("${params.out_dir}/star_index")
+    tuple val(SRR), path(fastq_files)
+    path star_index
 
-    // Define output: STAR alignment outputs
     output:
-    path "${params.out_dir}/STAR_alignment/${sample_dir.name}/*"
+    tuple val(SRR), path("*.out.bam"), emit: "bam_files"
 
     // Define the script
     script:
     """
-    # Create the log dir
-    mkdir -p ${params.out_dir}/logs/star_alignment
-
-    # Load the module for STAR
     module load STAR
 
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] Processing sample: ${sample_dir.name}"
+    echo "[\$(date '+%Y-%m-%d %H:%M:%S')] Processing sample: ${SRR}"
 
-    # Output directory
-    out_dir="${params.out_dir}/STAR_alignment/${sample_dir.name}"
-    mkdir -p $out_dir
+    STAR --runMode alignReads \\
+        --genomeDir $star_index \\
+        --runThreadN ${params.STAR.threads} \\
+        --twopassMode Basic \\
+        --outFilterMultimapNmax 20 \\
+        --alignSJoverhangMin 8 \\
+        --alignSJDBoverhangMin 1 \\
+        --outFilterMismatchNmax 999 \\
+        --outFilterMismatchNoverLmax 0.1 \\
+        --alignIntronMin 20 \\
+        --alignIntronMax 1000000 \\
+        --alignMatesGapMax 1000000 \\
+        --outFilterType BySJout \\
+        --outFilterScoreMinOverLread 0.33 \\
+        --outFilterMatchNminOverLread 0.33 \\
+        --limitSjdbInsertNsj 1200000 \\
+        --readFilesIn $fastq_files \\
+        --readFilesCommand gunzip -c \\
+        --outFileNamePrefix ${SRR}_ \\
+        --outSAMstrandField intronMotif \\
+        --alignSoftClipAtReferenceEnds Yes \\
+        --quantMode TranscriptomeSAM \\
+        --outSAMtype BAM SortedByCoordinate \\
+        --outSAMunmapped Within \\
+        --genomeLoad NoSharedMemory \\
+        --chimSegmentMin 15 \\
+        --chimJunctionOverhangMin 15 \\
+        --chimOutType Junctions WithinBAM SoftClip \\
+        --chimMainSegmentMultNmax 1 \\
+        --outSAMattributes NH HI AS nM NM ch \\
+        --outSAMattrRGline ID:${SRR} SM:${SRR}
 
-    # Input FASTQ files
-    fastq1="${sample_dir}/${sample_dir.name}/${sample_dir.name}_1_paired.fastq.gz"
-    fastq2="${sample_dir}/${sample_dir.name}/${sample_dir.name}_2_paired.fastq.gz"
-
-    # Do the STAR alignement 
-    STAR --runMode alignReads \
-        --genomeDir $star_index \
-        --runThreadN ${params.STAR.threads} \
-        --twopassMode Basic \
-        --genomeChrBinNbits 15 \
-        --outFilterMultimapNmax 20 \
-        --alignSJoverhangMin 8 \
-        --alignSJDBoverhangMin 1 \
-        --outFilterMismatchNmax 999 \
-        --outFilterMismatchNoverLmax 0.1 \
-        --alignIntronMin 20 \
-        --alignIntronMax 1000000 \
-        --alignMatesGapMax 1000000 \
-        --outFilterType BySJout \
-        --outFilterScoreMinOverLread 0.33 \
-        --outFilterMatchNminOverLread 0.33 \
-        --limitSjdbInsertNsj 1200000 \
-        --readFilesIn $fastq1 $fastq2 \
-        --readFilesCommand gunzip -c \
-        --outFileNamePrefix ${out_dir}/${sample_dir.name}_ \
-        --outSAMstrandField intronMotif \
-        --alignSoftClipAtReferenceEnds Yes \
-        --quantMode TranscriptomeSAM \
-        --outSAMtype BAM Unsorted \
-        --outSAMunmapped Within \
-        --genomeLoad NoSharedMemory \
-        --chimSegmentMin 15 \
-        --chimJunctionOverhangMin 15 \
-        --chimOutType Junctions WithinBAM SoftClip \
-        --chimMainSegmentMultNmax 1 \
-        --outSAMattributes NH HI AS nM NM ch\
-        --outSAMattrRGline ID:${sample_dir.name} SM:${sample_dir.name}
-
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] Sample ${sample_dir.name} aligned"
+    echo "[\$(date '+%Y-%m-%d %H:%M:%S')] Sample ${SRR} aligned"
     """
 }

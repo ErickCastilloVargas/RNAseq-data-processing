@@ -1,0 +1,635 @@
+Mar-26 18:59:25.182 [main] DEBUG nextflow.cli.Launcher - $> nextflow run nf/workflows/data_processing.nf -params-file /home/emcastillo/ull02_shared/Erick/parameters.json -profile slurm
+Mar-26 18:59:25.466 [main] DEBUG nextflow.cli.CmdRun - N E X T F L O W  ~  version 24.10.5
+Mar-26 18:59:25.493 [main] DEBUG nextflow.plugin.PluginsFacade - Setting up plugin manager > mode=prod; embedded=false; plugins-dir=/home/emcastillo/.nextflow/plugins; core-plugins: nf-amazon@2.9.2,nf-azure@1.10.2,nf-cloudcache@0.4.2,nf-codecommit@0.2.2,nf-console@1.1.4,nf-google@1.15.4,nf-tower@1.9.3,nf-wave@1.7.4
+Mar-26 18:59:25.574 [main] INFO  o.pf4j.DefaultPluginStatusProvider - Enabled plugins: []
+Mar-26 18:59:25.576 [main] INFO  o.pf4j.DefaultPluginStatusProvider - Disabled plugins: []
+Mar-26 18:59:25.580 [main] INFO  org.pf4j.DefaultPluginManager - PF4J version 3.12.0 in 'deployment' mode
+Mar-26 18:59:25.598 [main] INFO  org.pf4j.AbstractPluginManager - No plugins
+Mar-26 18:59:25.631 [main] DEBUG nextflow.config.ConfigBuilder - Found config local: /mnt/data_proj/ull02_shared/Erick/Pipeline/nextflow.config
+Mar-26 18:59:25.635 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /mnt/data_proj/ull02_shared/Erick/Pipeline/nextflow.config
+Mar-26 18:59:25.674 [main] DEBUG n.secret.LocalSecretsProvider - Secrets store: /home/emcastillo/.nextflow/secrets/store.json
+Mar-26 18:59:25.679 [main] DEBUG nextflow.secret.SecretsLoader - Discovered secrets providers: [nextflow.secret.LocalSecretsProvider@1a78dacd] - activable => nextflow.secret.LocalSecretsProvider@1a78dacd
+Mar-26 18:59:25.709 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `slurm`
+Mar-26 18:59:26.438 [main] DEBUG nextflow.config.ConfigBuilder - Available config profiles: [slurm, local]
+Mar-26 18:59:26.502 [main] DEBUG nextflow.cli.CmdRun - Applied DSL=2 from script declaration
+Mar-26 18:59:26.523 [main] DEBUG nextflow.cli.CmdRun - Launching `nf/workflows/data_processing.nf` [curious_carlsson] DSL2 - revision: 3775a8b613
+Mar-26 18:59:26.525 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins default=[]
+Mar-26 18:59:26.525 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins resolved requirement=[]
+Mar-26 18:59:26.593 [main] DEBUG nextflow.Session - Session UUID: 1d75b95f-a64d-4fe6-8eb0-b106b46bb5d5
+Mar-26 18:59:26.594 [main] DEBUG nextflow.Session - Run name: curious_carlsson
+Mar-26 18:59:26.595 [main] DEBUG nextflow.Session - Executor pool size: 20
+Mar-26 18:59:26.606 [main] DEBUG nextflow.file.FilePorter - File porter settings maxRetries=3; maxTransfers=50; pollTimeout=null
+Mar-26 18:59:26.614 [main] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'FileTransfer' minSize=10; maxSize=60; workQueue=LinkedBlockingQueue[-1]; allowCoreThreadTimeout=false
+Mar-26 18:59:26.646 [main] DEBUG nextflow.cli.CmdRun - 
+  Version: 24.10.5 build 5935
+  Created: 04-03-2025 17:55 UTC (17:55 WEST)
+  System: Linux 4.18.0-372.9.1.el8.x86_64
+  Runtime: Groovy 4.0.23 on OpenJDK 64-Bit Server VM 21.0.2+13-LTS
+  Encoding: UTF-8 (UTF-8)
+  Process: 1769239@login-cpu01 [10.0.22.15]
+  CPUs: 20 - Mem: 31.2 GB (21.5 GB) - Swap: 0 (0)
+Mar-26 18:59:26.700 [main] DEBUG nextflow.Session - Work-dir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work [nfs]
+Mar-26 18:59:26.701 [main] DEBUG nextflow.Session - Script base path does not exist or is not a directory: /mnt/data_proj/ull02_shared/Erick/Pipeline/nf/workflows/bin
+Mar-26 18:59:26.714 [main] DEBUG nextflow.executor.ExecutorFactory - Extension executors providers=[]
+Mar-26 18:59:26.726 [main] DEBUG nextflow.Session - Observer factory: DefaultObserverFactory
+Mar-26 18:59:26.763 [main] DEBUG nextflow.cache.CacheFactory - Using Nextflow cache factory: nextflow.cache.DefaultCacheFactory
+Mar-26 18:59:26.776 [main] DEBUG nextflow.util.CustomThreadPool - Creating default thread pool > poolSize: 21; maxThreads: 1000
+Mar-26 18:59:26.898 [main] DEBUG nextflow.Session - Session start
+Mar-26 18:59:27.068 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
+Mar-26 18:59:27.393 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:star_and_RSEM_index_building` matches process star_and_RSEM_index_building
+Mar-26 18:59:27.421 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Mar-26 18:59:27.421 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Mar-26 18:59:27.433 [main] DEBUG nextflow.executor.Executor - [warm up] executor > slurm
+Mar-26 18:59:27.444 [main] DEBUG n.processor.TaskPollingMonitor - Creating task monitor for executor 'slurm' > capacity: 100; pollInterval: 5s; dumpInterval: 5m 
+Mar-26 18:59:27.447 [main] DEBUG n.processor.TaskPollingMonitor - >>> barrier register (monitor: slurm)
+Mar-26 18:59:27.450 [main] DEBUG n.executor.AbstractGridExecutor - Creating executor 'slurm' > queue-stat-interval: 1m
+Mar-26 18:59:27.557 [main] DEBUG nextflow.Session - Workflow process names [dsl2]: star_and_RSEM_index_building
+Mar-26 18:59:27.573 [main] WARN  nextflow.Session - There's no process matching config selector: adapters_trimming
+Mar-26 18:59:27.575 [main] WARN  nextflow.Session - There's no process matching config selector: fastQC_post_trimming
+Mar-26 18:59:27.575 [main] WARN  nextflow.Session - There's no process matching config selector: fastQC_raw_data
+Mar-26 18:59:27.575 [main] WARN  nextflow.Session - There's no process matching config selector: multiQC_post_trimming
+Mar-26 18:59:27.575 [main] WARN  nextflow.Session - There's no process matching config selector: multiQC_raw_data
+Mar-26 18:59:27.575 [main] WARN  nextflow.Session - There's no process matching config selector: star_alignment
+Mar-26 18:59:27.575 [main] WARN  nextflow.Session - There's no process matching config selector: star_alignment_no_adapter_trimming
+Mar-26 18:59:27.575 [main] WARN  nextflow.Session - There's no process matching config selector: qc_post_alignment
+Mar-26 18:59:27.575 [main] WARN  nextflow.Session - There's no process matching config selector: rsem_transcript_quantification
+Mar-26 18:59:27.576 [main] DEBUG nextflow.Session - Igniting dataflow network (1)
+Mar-26 18:59:27.577 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > star_and_RSEM_index_building
+Mar-26 18:59:27.578 [main] DEBUG nextflow.script.ScriptRunner - Parsed script files:
+  Script_93d19725de2cd412: /mnt/data_proj/ull02_shared/Erick/Pipeline/nf/workflows/../modules/data_processing/03_STAR_and_RSEM_index_building/main.nf
+  Script_fb8de751727a97e9: /mnt/data_proj/ull02_shared/Erick/Pipeline/nf/workflows/data_processing.nf
+Mar-26 18:59:27.578 [main] DEBUG nextflow.script.ScriptRunner - > Awaiting termination 
+Mar-26 18:59:27.578 [main] DEBUG nextflow.Session - Session await
+Mar-26 18:59:27.892 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [SLURM] submitted process star_and_RSEM_index_building > jobId: 55840; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9
+Mar-26 18:59:27.893 [Task submitter] INFO  nextflow.Session - [80/5da108] Submitted process > star_and_RSEM_index_building
+Mar-26 19:04:32.472 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor slurm > tasks to be completed: 1 -- submitted tasks are shown below
+~> TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: RUNNING; exit: -; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: -; ]
+Mar-26 19:09:32.486 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor slurm > tasks to be completed: 1 -- submitted tasks are shown below
+~> TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: RUNNING; exit: -; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: -; ]
+Mar-26 19:14:32.505 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor slurm > tasks to be completed: 1 -- submitted tasks are shown below
+~> TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: RUNNING; exit: -; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: -; ]
+Mar-26 19:19:32.576 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor slurm > tasks to be completed: 1 -- submitted tasks are shown below
+~> TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: RUNNING; exit: -; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: -; ]
+Mar-26 19:24:32.589 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor slurm > tasks to be completed: 1 -- submitted tasks are shown below
+~> TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: RUNNING; exit: -; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: -; ]
+Mar-26 19:29:32.599 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor slurm > tasks to be completed: 1 -- submitted tasks are shown below
+~> TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: RUNNING; exit: -; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: -; ]
+Mar-26 19:34:32.612 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor slurm > tasks to be completed: 1 -- submitted tasks are shown below
+~> TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: RUNNING; exit: -; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: -; ]
+Mar-26 19:39:32.623 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor slurm > tasks to be completed: 1 -- submitted tasks are shown below
+~> TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: RUNNING; exit: -; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: -; ]
+Mar-26 19:44:32.637 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor slurm > tasks to be completed: 1 -- submitted tasks are shown below
+~> TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: RUNNING; exit: -; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: -; ]
+Mar-26 19:49:32.647 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor slurm > tasks to be completed: 1 -- submitted tasks are shown below
+~> TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: RUNNING; exit: -; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: -; ]
+Mar-26 19:54:32.663 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor slurm > tasks to be completed: 1 -- submitted tasks are shown below
+~> TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: RUNNING; exit: -; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: -; ]
+Mar-26 19:59:32.677 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor slurm > tasks to be completed: 1 -- submitted tasks are shown below
+~> TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: RUNNING; exit: -; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: -; ]
+Mar-26 20:04:32.684 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor slurm > tasks to be completed: 1 -- submitted tasks are shown below
+~> TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: RUNNING; exit: -; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: -; ]
+Mar-26 20:09:32.747 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor slurm > tasks to be completed: 1 -- submitted tasks are shown below
+~> TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: RUNNING; exit: -; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: -; ]
+Mar-26 20:14:32.763 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor slurm > tasks to be completed: 1 -- submitted tasks are shown below
+~> TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: RUNNING; exit: -; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: -; ]
+Mar-26 20:19:32.767 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor slurm > tasks to be completed: 1 -- submitted tasks are shown below
+~> TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: RUNNING; exit: -; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: -; ]
+Mar-26 20:24:32.779 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor slurm > tasks to be completed: 1 -- submitted tasks are shown below
+~> TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: RUNNING; exit: -; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: -; ]
+Mar-26 20:29:32.804 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor slurm > tasks to be completed: 1 -- submitted tasks are shown below
+~> TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: RUNNING; exit: -; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: -; ]
+Mar-26 20:34:32.857 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor slurm > tasks to be completed: 1 -- submitted tasks are shown below
+~> TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: RUNNING; exit: -; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: -; ]
+Mar-26 20:39:32.867 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor slurm > tasks to be completed: 1 -- submitted tasks are shown below
+~> TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: RUNNING; exit: -; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: -; ]
+Mar-26 20:44:32.898 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor slurm > tasks to be completed: 1 -- submitted tasks are shown below
+~> TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: RUNNING; exit: -; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: -; ]
+Mar-26 20:49:32.912 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor slurm > tasks to be completed: 1 -- submitted tasks are shown below
+~> TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: RUNNING; exit: -; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: -; ]
+Mar-26 20:54:32.933 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor slurm > tasks to be completed: 1 -- submitted tasks are shown below
+~> TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: RUNNING; exit: -; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: -; ]
+Mar-26 20:59:33.022 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor slurm > tasks to be completed: 1 -- submitted tasks are shown below
+~> TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: RUNNING; exit: -; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: -; ]
+Mar-26 21:04:33.061 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor slurm > tasks to be completed: 1 -- submitted tasks are shown below
+~> TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: RUNNING; exit: -; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: -; ]
+Mar-26 21:09:33.072 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor slurm > tasks to be completed: 1 -- submitted tasks are shown below
+~> TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: RUNNING; exit: -; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: -; ]
+Mar-26 21:14:33.085 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor slurm > tasks to be completed: 1 -- submitted tasks are shown below
+~> TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: RUNNING; exit: -; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: -; ]
+Mar-26 21:19:33.127 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor slurm > tasks to be completed: 1 -- submitted tasks are shown below
+~> TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: RUNNING; exit: -; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: -; ]
+Mar-26 21:24:33.161 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor slurm > tasks to be completed: 1 -- submitted tasks are shown below
+~> TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: RUNNING; exit: -; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: -; ]
+Mar-26 21:29:33.213 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor slurm > tasks to be completed: 1 -- submitted tasks are shown below
+~> TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: RUNNING; exit: -; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: -; ]
+Mar-26 21:34:33.228 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor slurm > tasks to be completed: 1 -- submitted tasks are shown below
+~> TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: RUNNING; exit: -; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: -; ]
+Mar-26 21:39:33.240 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor slurm > tasks to be completed: 1 -- submitted tasks are shown below
+~> TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: RUNNING; exit: -; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: -; ]
+Mar-26 21:44:33.252 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor slurm > tasks to be completed: 1 -- submitted tasks are shown below
+~> TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: RUNNING; exit: -; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: -; ]
+Mar-26 21:49:33.260 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor slurm > tasks to be completed: 1 -- submitted tasks are shown below
+~> TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: RUNNING; exit: -; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: -; ]
+Mar-26 21:54:33.268 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor slurm > tasks to be completed: 1 -- submitted tasks are shown below
+~> TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: RUNNING; exit: -; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: -; ]
+Mar-26 21:59:33.280 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor slurm > tasks to be completed: 1 -- submitted tasks are shown below
+~> TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: RUNNING; exit: -; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: -; ]
+Mar-26 21:59:43.284 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[jobId: 55840; id: 1; name: star_and_RSEM_index_building; status: COMPLETED; exit: 140; error: -; workDir: /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9 started: 1743015572455; exited: 2025-03-26T21:59:03.960914Z; ]
+Mar-26 21:59:43.286 [Task monitor] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'TaskFinalizer' minSize=10; maxSize=60; workQueue=LinkedBlockingQueue[-1]; allowCoreThreadTimeout=false
+Mar-26 21:59:43.301 [TaskFinalizer-1] DEBUG nextflow.processor.TaskProcessor - Handling unexpected condition for
+  task: name=star_and_RSEM_index_building; work-dir=/mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9
+  error [nextflow.exception.ProcessFailedException]: Process `star_and_RSEM_index_building` terminated with an error exit status (140)
+Mar-26 21:59:43.371 [TaskFinalizer-1] ERROR nextflow.processor.TaskProcessor - Error executing process > 'star_and_RSEM_index_building'
+
+Caused by:
+  Process `star_and_RSEM_index_building` terminated with an error exit status (140)
+
+
+Command executed:
+
+  module load STAR
+  module load RSEM
+  
+  echo "[$(date '+%Y-%m-%d %H:%M:%S')] Starting to create STAR index"
+  
+  STAR --runMode genomeGenerate \
+      --genomeDir STAR_index \
+      --genomeFastaFiles /home/emcastillo/data/RNAseq/references/GRCh38.p14.genome.fa \
+      --sjdbGTFfile /home/emcastillo/data/RNAseq/references/gencode.v47.annotation.gtf \
+      --sjdbOverhang 100 \
+      --runThreadN 10
+  
+  echo "[$(date '+%Y-%m-%d %H:%M:%S')] STAR index created"
+  
+  echo "[$(date '+%Y-%m-%d %H:%M:%S')] Starting to create RSEM index"
+  
+  # RSEM index generation
+  rsem-prepare-reference --num-threads 10 \
+      --gtf /home/emcastillo/data/RNAseq/references/gencode.v47.annotation.gtf \
+      /home/emcastillo/data/RNAseq/references/GRCh38.p14.genome.fa \
+      RSEM_index/rsem_reference
+  
+  echo "[$(date '+%Y-%m-%d %H:%M:%S')] RSEM index created"
+
+Command exit status:
+  140
+
+Command output:
+  [2025-03-26 18:59:36] Starting to create STAR index
+  	STAR --runMode genomeGenerate --genomeDir STAR_index --genomeFastaFiles /home/emcastillo/data/RNAseq/references/GRCh38.p14.genome.fa --sjdbGTFfile /home/emcastillo/data/RNAseq/references/gencode.v47.annotation.gtf --sjdbOverhang 100 --runThreadN 10
+  	STAR version: 2.7.11a   compiled: 2024-09-23T12:09:29+01:00 node0307-1:/local/easybuild/STAR/2.7.11a/GCC-12.2.0/STAR-2.7.11a/source
+  Mar 26 18:59:37 ..... started STAR run
+  Mar 26 18:59:37 ... starting to generate Genome files
+  Mar 26 19:01:13 ..... processing annotations GTF
+  Mar 26 19:02:10 ... starting to sort Suffix Array. This may take a long time...
+  Mar 26 19:02:28 ... sorting Suffix Array chunks and saving them to disk...
+  Mar 26 20:01:44 ... loading chunks from disk, packing SA...
+  Mar 26 20:13:20 ... finished generating suffix array
+  Mar 26 20:13:20 ... generating Suffix Array index
+  Mar 26 20:22:45 ... completed Suffix Array index
+  Mar 26 20:22:51 ..... inserting junctions into the genome indices
+
+Command error:
+  
+  The following have been reloaded with a version change:
+    1) GCC/11.2.0 => GCC/12.2.0             4) STAR/2.7.11b-GCC-11.2.0 => STAR/2.7.11a-GCC-12.2.0
+    2) GCCcore/11.2.0 => GCCcore/12.2.0     5) binutils/2.37-GCCcore-11.2.0 => binutils/2.39-GCCcore-12.2.0
+    3) Java/21.0.2 => Java/11.0.20          6) zlib/1.2.11-GCCcore-11.2.0 => zlib/1.2.12-GCCcore-12.2.0
+
+Work dir:
+  /mnt/data_proj/ull02_shared/Erick/Pipeline/work/80/5da108641ca07111389d5a9613a3c9
+
+Tip: you can try to figure out what's wrong by changing to the process work dir and showing the script file named `.command.sh`
+Mar-26 21:59:43.376 [TaskFinalizer-1] DEBUG nextflow.Session - Session aborted -- Cause: Process `star_and_RSEM_index_building` terminated with an error exit status (140)
+Mar-26 21:59:43.377 [main] DEBUG nextflow.Session - Session await > all processes finished
+Mar-26 21:59:43.398 [TaskFinalizer-1] DEBUG nextflow.Session - 
+Thread[#52,Actor Thread 1,5,main]
+  java.base@21.0.2/jdk.internal.misc.Unsafe.park(Native Method)
+  java.base@21.0.2/java.util.concurrent.locks.LockSupport.park(LockSupport.java:371)
+  java.base@21.0.2/java.util.concurrent.LinkedTransferQueue$DualNode.await(LinkedTransferQueue.java:458)
+  java.base@21.0.2/java.util.concurrent.SynchronousQueue$Transferer.xferLifo(SynchronousQueue.java:194)
+  java.base@21.0.2/java.util.concurrent.SynchronousQueue.xfer(SynchronousQueue.java:233)
+  java.base@21.0.2/java.util.concurrent.SynchronousQueue.take(SynchronousQueue.java:316)
+  java.base@21.0.2/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1070)
+  java.base@21.0.2/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+  java.base@21.0.2/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+  java.base@21.0.2/java.lang.Thread.runWith(Thread.java:1596)
+  java.base@21.0.2/java.lang.Thread.run(Thread.java:1583)
+
+Thread[#9,Reference Handler,10,system]
+  java.base@21.0.2/java.lang.ref.Reference.waitForReferencePendingList(Native Method)
+  java.base@21.0.2/java.lang.ref.Reference.processPendingReferences(Reference.java:246)
+  java.base@21.0.2/java.lang.ref.Reference$ReferenceHandler.run(Reference.java:208)
+
+Thread[#55,Actor Thread 4,5,main]
+  java.base@21.0.2/jdk.internal.misc.Unsafe.park(Native Method)
+  java.base@21.0.2/java.util.concurrent.locks.LockSupport.park(LockSupport.java:371)
+  java.base@21.0.2/java.util.concurrent.LinkedTransferQueue$DualNode.await(LinkedTransferQueue.java:458)
+  java.base@21.0.2/java.util.concurrent.SynchronousQueue$Transferer.xferLifo(SynchronousQueue.java:194)
+  java.base@21.0.2/java.util.concurrent.SynchronousQueue.xfer(SynchronousQueue.java:233)
+  java.base@21.0.2/java.util.concurrent.SynchronousQueue.take(SynchronousQueue.java:316)
+  java.base@21.0.2/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1070)
+  java.base@21.0.2/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+  java.base@21.0.2/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+  java.base@21.0.2/java.lang.Thread.runWith(Thread.java:1596)
+  java.base@21.0.2/java.lang.Thread.run(Thread.java:1583)
+
+Thread[#10,Finalizer,8,system]
+  java.base@21.0.2/java.lang.Object.wait0(Native Method)
+  java.base@21.0.2/java.lang.Object.wait(Object.java:366)
+  java.base@21.0.2/java.lang.Object.wait(Object.java:339)
+  java.base@21.0.2/java.lang.ref.NativeReferenceQueue.await(NativeReferenceQueue.java:48)
+  java.base@21.0.2/java.lang.ref.ReferenceQueue.remove0(ReferenceQueue.java:158)
+  java.base@21.0.2/java.lang.ref.NativeReferenceQueue.remove(NativeReferenceQueue.java:89)
+  java.base@21.0.2/java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:173)
+
+Thread[#49,AnsiLogObserver,5,main]
+  java.base@21.0.2/java.lang.Object.wait0(Native Method)
+  java.base@21.0.2/java.lang.Object.wait(Object.java:366)
+  app//nextflow.trace.AnsiLogObserver.render0(AnsiLogObserver.groovy:185)
+  java.base@21.0.2/java.lang.invoke.DirectMethodHandle$Holder.invokeVirtual(DirectMethodHandle$Holder)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$MH/0x00007f4b44359000.invoke(LambdaForm$MH)
+  java.base@21.0.2/java.lang.invoke.Invokers$Holder.invokeExact_MT(Invokers$Holder)
+  java.base@21.0.2/jdk.internal.reflect.DirectMethodHandleAccessor.invokeImpl(DirectMethodHandleAccessor.java:154)
+  java.base@21.0.2/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+  java.base@21.0.2/java.lang.reflect.Method.invoke(Method.java:580)
+  app//org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:343)
+  app//groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:328)
+  app//groovy.lang.MetaClassImpl.doInvokeMethod(MetaClassImpl.java:1333)
+  app//groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1088)
+  app//groovy.lang.MetaClassImpl.invokeMethodClosure(MetaClassImpl.java:1017)
+  app//groovy.lang.MetaClassImpl.doInvokeMethod(MetaClassImpl.java:1207)
+  app//groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1088)
+  app//groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1007)
+  app//groovy.lang.Closure.call(Closure.java:433)
+  app//groovy.lang.Closure.call(Closure.java:412)
+  app//groovy.lang.Closure.run(Closure.java:505)
+  java.base@21.0.2/java.lang.Thread.runWith(Thread.java:1596)
+  java.base@21.0.2/java.lang.Thread.run(Thread.java:1583)
+
+Thread[#54,Actor Thread 3,5,main]
+  java.base@21.0.2/jdk.internal.misc.Unsafe.park(Native Method)
+  java.base@21.0.2/java.util.concurrent.locks.LockSupport.park(LockSupport.java:371)
+  java.base@21.0.2/java.util.concurrent.LinkedTransferQueue$DualNode.await(LinkedTransferQueue.java:458)
+  java.base@21.0.2/java.util.concurrent.SynchronousQueue$Transferer.xferLifo(SynchronousQueue.java:194)
+  java.base@21.0.2/java.util.concurrent.SynchronousQueue.xfer(SynchronousQueue.java:233)
+  java.base@21.0.2/java.util.concurrent.SynchronousQueue.take(SynchronousQueue.java:316)
+  java.base@21.0.2/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1070)
+  java.base@21.0.2/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+  java.base@21.0.2/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+  java.base@21.0.2/java.lang.Thread.runWith(Thread.java:1596)
+  java.base@21.0.2/java.lang.Thread.run(Thread.java:1583)
+
+Thread[#449,Actor Thread 7,5,main]
+  java.base@21.0.2/java.lang.Throwable.fillInStackTrace(Native Method)
+  java.base@21.0.2/java.lang.Throwable.fillInStackTrace(Throwable.java:820)
+  java.base@21.0.2/java.lang.Throwable.<init>(Throwable.java:295)
+  java.base@21.0.2/java.lang.Exception.<init>(Exception.java:85)
+  java.base@21.0.2/java.lang.ReflectiveOperationException.<init>(ReflectiveOperationException.java:76)
+  java.base@21.0.2/java.lang.ClassNotFoundException.<init>(ClassNotFoundException.java:71)
+  java.base@21.0.2/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641)
+  java.base@21.0.2/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188)
+  java.base@21.0.2/java.lang.ClassLoader.loadClass(ClassLoader.java:526)
+  java.base@21.0.2/java.lang.Class.forName0(Native Method)
+  java.base@21.0.2/java.lang.Class.forName(Class.java:534)
+  java.base@21.0.2/java.lang.Class.forName(Class.java:513)
+  java.desktop@21.0.2/com.sun.beans.finder.ClassFinder.findClass(ClassFinder.java:101)
+  java.desktop@21.0.2/java.beans.Introspector.findCustomizerClass(Introspector.java:1125)
+  java.desktop@21.0.2/java.beans.Introspector.getTargetBeanDescriptor(Introspector.java:1119)
+  java.desktop@21.0.2/java.beans.Introspector.getBeanInfo(Introspector.java:445)
+  java.desktop@21.0.2/java.beans.Introspector.getBeanInfo(Introspector.java:195)
+  app//groovy.lang.MetaClassImpl.lambda$addProperties$25(MetaClassImpl.java:3466)
+  app//groovy.lang.MetaClassImpl$$Lambda/0x00007f4b440a1db8.run(Unknown Source)
+  java.base@21.0.2/java.security.AccessController.executePrivileged(AccessController.java:809)
+  java.base@21.0.2/java.security.AccessController.doPrivileged(AccessController.java:571)
+  app//groovy.lang.MetaClassImpl.doPrivileged(MetaClassImpl.java:3519)
+  app//groovy.lang.MetaClassImpl.addProperties(MetaClassImpl.java:3466)
+  app//groovy.lang.MetaClassImpl.reinitialize(MetaClassImpl.java:3448)
+  app//groovy.lang.MetaClassImpl.initialize(MetaClassImpl.java:3441)
+  app//org.codehaus.groovy.reflection.ClassInfo.getMetaClassUnderLock(ClassInfo.java:272)
+  app//org.codehaus.groovy.reflection.ClassInfo.getMetaClass(ClassInfo.java:314)
+  app//org.codehaus.groovy.runtime.metaclass.MetaClassRegistryImpl.getMetaClass(MetaClassRegistryImpl.java:269)
+  app//org.codehaus.groovy.vmplugin.v8.Selector$InitSelector.getMetaClass(Selector.java:406)
+  app//org.codehaus.groovy.vmplugin.v8.Selector$MethodSelector.setCallSiteTarget(Selector.java:1020)
+  app//org.codehaus.groovy.vmplugin.v8.IndyInterface.fallback(IndyInterface.java:360)
+  app//org.codehaus.groovy.vmplugin.v8.IndyInterface.access$000(IndyInterface.java:50)
+  app//org.codehaus.groovy.vmplugin.v8.IndyInterface$FallbackSupplier.get(IndyInterface.java:282)
+  app//org.codehaus.groovy.vmplugin.v8.IndyInterface.lambda$fromCache$1(IndyInterface.java:304)
+  app//org.codehaus.groovy.vmplugin.v8.IndyInterface$$Lambda/0x00007f4b440a7ae0.provide(Unknown Source)
+  app//org.codehaus.groovy.vmplugin.v8.CacheableCallSite.getAndPut(CacheableCallSite.java:70)
+  app//org.codehaus.groovy.vmplugin.v8.IndyInterface.lambda$fromCache$2(IndyInterface.java:301)
+  app//org.codehaus.groovy.vmplugin.v8.IndyInterface$$Lambda/0x00007f4b440a76b8.apply(Unknown Source)
+  app//org.codehaus.groovy.vmplugin.v8.IndyInterface.doWithCallSite(IndyInterface.java:376)
+  app//org.codehaus.groovy.vmplugin.v8.IndyInterface.fromCache(IndyInterface.java:298)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$DMH/0x00007f4b440aa800.invokeStatic(LambdaForm$DMH)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$MH/0x00007f4b440b0000.invoke(LambdaForm$MH)
+  java.base@21.0.2/java.lang.invoke.Invokers$Holder.linkToCallSite(Invokers$Holder)
+  app//nextflow.util.KryoHelper.newInstance(SerializationHelper.groovy:87)
+  java.base@21.0.2/java.lang.invoke.DirectMethodHandle$Holder.invokeStatic(DirectMethodHandle$Holder)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$MH/0x00007f4b4401c000.invoke(LambdaForm$MH)
+  java.base@21.0.2/java.lang.invoke.Invokers$Holder.invokeExact_MT(Invokers$Holder)
+  java.base@21.0.2/jdk.internal.reflect.DirectMethodHandleAccessor.invokeImpl(DirectMethodHandleAccessor.java:153)
+  java.base@21.0.2/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+  java.base@21.0.2/java.lang.reflect.Method.invoke(Method.java:580)
+  app//org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:343)
+  app//groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:328)
+  app//groovy.lang.MetaClassImpl.invokeStaticMethod(MetaClassImpl.java:1586)
+  app//org.codehaus.groovy.runtime.InvokerHelper.invokeMethod(InvokerHelper.java:611)
+  app//org.codehaus.groovy.runtime.ScriptBytecodeAdapter.invokeMethodN(ScriptBytecodeAdapter.java:182)
+  app//nextflow.util.KryoHelper$1.methodMissing(SerializationHelper.groovy)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$DMH/0x00007f4b440b2c00.invokeVirtual(LambdaForm$DMH)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$MH/0x00007f4b442ae800.invoke(LambdaForm$MH)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$MH/0x00007f4b44180800.invokeExact_MT(LambdaForm$MH)
+  java.base@21.0.2/jdk.internal.reflect.DirectMethodHandleAccessor.invokeImpl(DirectMethodHandleAccessor.java:155)
+  java.base@21.0.2/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+  java.base@21.0.2/java.lang.reflect.Method.invoke(Method.java:580)
+  app//org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:343)
+  app//groovy.lang.MetaClassImpl.invokeMissingMethod(MetaClassImpl.java:924)
+  app//groovy.lang.MetaClassImpl.invokePropertyOrMissing(MetaClassImpl.java:1413)
+  app//groovy.lang.MetaClassImpl.doInvokeMethod(MetaClassImpl.java:1335)
+  app//groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1088)
+  app//groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1007)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$DMH/0x00007f4b440b3800.invokeInterface(LambdaForm$DMH)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$MH/0x00007f4b44179400.invoke(LambdaForm$MH)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$MH/0x00007f4b4419c800.invoke(LambdaForm$MH)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$MH/0x00007f4b44159c00.guardWithCatch(LambdaForm$MH)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$MH/0x00007f4b440b2000.reinvoke(LambdaForm$MH)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$MH/0x00007f4b440b2400.guard(LambdaForm$MH)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$MH/0x00007f4b440b2000.reinvoke(LambdaForm$MH)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$MH/0x00007f4b440b2400.guard(LambdaForm$MH)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$MH/0x00007f4b440b2000.reinvoke(LambdaForm$MH)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$MH/0x00007f4b44138800.invoke(LambdaForm$MH)
+  java.base@21.0.2/java.lang.invoke.Invokers$Holder.invokeExact_MT(Invokers$Holder)
+  app//org.codehaus.groovy.vmplugin.v8.IndyInterface.fromCache(IndyInterface.java:321)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$DMH/0x00007f4b440aa800.invokeStatic(LambdaForm$DMH)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$MH/0x00007f4b440b0000.invoke(LambdaForm$MH)
+  java.base@21.0.2/java.lang.invoke.Invokers$Holder.linkToCallSite(Invokers$Holder)
+  app//nextflow.util.KryoHelper$1.initialValue(SerializationHelper.groovy:60)
+  app//nextflow.util.KryoHelper$1.initialValue(SerializationHelper.groovy)
+  java.base@21.0.2/java.lang.ThreadLocal.setInitialValue(ThreadLocal.java:225)
+  java.base@21.0.2/java.lang.ThreadLocal.get(ThreadLocal.java:194)
+  java.base@21.0.2/java.lang.ThreadLocal.get(ThreadLocal.java:172)
+  java.base@21.0.2/java.lang.invoke.DirectMethodHandle$Holder.invokeVirtual(DirectMethodHandle$Holder)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$MH/0x00007f4b44159c00.guardWithCatch(LambdaForm$MH)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$MH/0x00007f4b440b2000.reinvoke(LambdaForm$MH)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$MH/0x00007f4b440b2400.guard(LambdaForm$MH)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$MH/0x00007f4b440b2000.reinvoke(LambdaForm$MH)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$MH/0x00007f4b440b2400.guard(LambdaForm$MH)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$MH/0x00007f4b440b2000.reinvoke(LambdaForm$MH)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$MH/0x00007f4b44138800.invoke(LambdaForm$MH)
+  java.base@21.0.2/java.lang.invoke.Invokers$Holder.invokeExact_MT(Invokers$Holder)
+  app//org.codehaus.groovy.vmplugin.v8.IndyInterface.fromCache(IndyInterface.java:321)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$DMH/0x00007f4b440aa800.invokeStatic(LambdaForm$DMH)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$MH/0x00007f4b440b0000.invoke(LambdaForm$MH)
+  java.base@21.0.2/java.lang.invoke.Invokers$Holder.linkToCallSite(Invokers$Holder)
+  app//nextflow.util.KryoHelper.kryo(SerializationHelper.groovy:79)
+  java.base@21.0.2/java.lang.invoke.DirectMethodHandle$Holder.invokeStatic(DirectMethodHandle$Holder)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$MH/0x00007f4b4401c000.invoke(LambdaForm$MH)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$MH/0x00007f4b44159c00.guardWithCatch(LambdaForm$MH)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$MH/0x00007f4b440b2000.reinvoke(LambdaForm$MH)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$MH/0x00007f4b440b2400.guard(LambdaForm$MH)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$MH/0x00007f4b440b2000.reinvoke(LambdaForm$MH)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$MH/0x00007f4b44138800.invoke(LambdaForm$MH)
+  java.base@21.0.2/java.lang.invoke.Invokers$Holder.invokeExact_MT(Invokers$Holder)
+  app//org.codehaus.groovy.vmplugin.v8.IndyInterface.fromCache(IndyInterface.java:321)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$DMH/0x00007f4b440aa800.invokeStatic(LambdaForm$DMH)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$MH/0x00007f4b440b0000.invoke(LambdaForm$MH)
+  java.base@21.0.2/java.lang.invoke.Invokers$Holder.linkToCallSite(Invokers$Holder)
+  app//nextflow.util.KryoHelper.serialize(SerializationHelper.groovy:166)
+  app//nextflow.trace.TraceRecord.serialize(TraceRecord.groovy:573)
+  app//nextflow.cache.CacheDB.writeTaskEntry0(CacheDB.groovy:147)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$DMH/0x00007f4b44365000.invokeVirtual(LambdaForm$DMH)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$MH/0x00007f4b4446a400.invoke(LambdaForm$MH)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$MH/0x00007f4b44180800.invokeExact_MT(LambdaForm$MH)
+  java.base@21.0.2/jdk.internal.reflect.DirectMethodHandleAccessor.invokeImpl(DirectMethodHandleAccessor.java:155)
+  java.base@21.0.2/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+  java.base@21.0.2/java.lang.reflect.Method.invoke(Method.java:580)
+  app//org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:343)
+  app//groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:328)
+  app//groovy.lang.MetaClassImpl.doInvokeMethod(MetaClassImpl.java:1333)
+  app//groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1088)
+  app//groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1007)
+  app//org.codehaus.groovy.runtime.InvokerHelper.invokePogoMethod(InvokerHelper.java:645)
+  app//org.codehaus.groovy.runtime.InvokerHelper.invokeMethod(InvokerHelper.java:628)
+  app//org.codehaus.groovy.runtime.InvokerHelper.invokeMethodSafe(InvokerHelper.java:82)
+  app//nextflow.cache.CacheDB$_putTaskAsync_closure1.doCall(CacheDB.groovy:157)
+  app//nextflow.cache.CacheDB$_putTaskAsync_closure1.call(CacheDB.groovy)
+  app//groovyx.gpars.agent.AgentBase.onMessage(AgentBase.java:102)
+  app//groovyx.gpars.agent.Agent.handleMessage(Agent.java:84)
+  app//groovyx.gpars.agent.AgentCore$1.handleMessage(AgentCore.java:48)
+  app//groovyx.gpars.util.AsyncMessagingCore.run(AsyncMessagingCore.java:132)
+  java.base@21.0.2/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+  java.base@21.0.2/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+  java.base@21.0.2/java.lang.Thread.runWith(Thread.java:1596)
+  java.base@21.0.2/java.lang.Thread.run(Thread.java:1583)
+
+Thread[#48,Thread-1,5,main]
+  java.base@21.0.2/jdk.internal.misc.Unsafe.park(Native Method)
+  java.base@21.0.2/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:269)
+  java.base@21.0.2/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1758)
+  java.base@21.0.2/java.util.concurrent.LinkedBlockingDeque.pollFirst(LinkedBlockingDeque.java:515)
+  java.base@21.0.2/java.util.concurrent.LinkedBlockingDeque.poll(LinkedBlockingDeque.java:677)
+  app//nextflow.util.SimpleAgent.run(SimpleAgent.groovy:89)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$DMH/0x00007f4b441ab000.invokeVirtual(LambdaForm$DMH)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$MH/0x00007f4b44324000.invoke(LambdaForm$MH)
+  java.base@21.0.2/java.lang.invoke.Invokers$Holder.invokeExact_MT(Invokers$Holder)
+  java.base@21.0.2/jdk.internal.reflect.DirectMethodHandleAccessor.invokeImpl(DirectMethodHandleAccessor.java:153)
+  java.base@21.0.2/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+  java.base@21.0.2/java.lang.reflect.Method.invoke(Method.java:580)
+  app//org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:343)
+  app//groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:328)
+  app//groovy.lang.MetaClassImpl.doInvokeMethod(MetaClassImpl.java:1333)
+  app//groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1088)
+  app//groovy.lang.MetaClassImpl.invokeMethodClosure(MetaClassImpl.java:1017)
+  app//groovy.lang.MetaClassImpl.doInvokeMethod(MetaClassImpl.java:1207)
+  app//groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1088)
+  app//groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1007)
+  app//groovy.lang.Closure.call(Closure.java:433)
+  app//groovy.lang.Closure.call(Closure.java:412)
+  app//groovy.lang.Closure.run(Closure.java:505)
+  java.base@21.0.2/java.lang.Thread.runWith(Thread.java:1596)
+  java.base@21.0.2/java.lang.Thread.run(Thread.java:1583)
+
+Thread[#53,Actor Thread 2,5,main]
+  java.base@21.0.2/jdk.internal.misc.Unsafe.park(Native Method)
+  java.base@21.0.2/java.util.concurrent.locks.LockSupport.park(LockSupport.java:371)
+  java.base@21.0.2/java.util.concurrent.LinkedTransferQueue$DualNode.await(LinkedTransferQueue.java:458)
+  java.base@21.0.2/java.util.concurrent.SynchronousQueue$Transferer.xferLifo(SynchronousQueue.java:194)
+  java.base@21.0.2/java.util.concurrent.SynchronousQueue.xfer(SynchronousQueue.java:233)
+  java.base@21.0.2/java.util.concurrent.SynchronousQueue.take(SynchronousQueue.java:316)
+  java.base@21.0.2/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1070)
+  java.base@21.0.2/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+  java.base@21.0.2/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+  java.base@21.0.2/java.lang.Thread.runWith(Thread.java:1596)
+  java.base@21.0.2/java.lang.Thread.run(Thread.java:1583)
+
+Thread[#11,Signal Dispatcher,9,system]
+
+Thread[#26,Common-Cleaner,8,InnocuousThreadGroup]
+  java.base@21.0.2/jdk.internal.misc.Unsafe.park(Native Method)
+  java.base@21.0.2/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:269)
+  java.base@21.0.2/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1847)
+  java.base@21.0.2/java.lang.ref.ReferenceQueue.await(ReferenceQueue.java:71)
+  java.base@21.0.2/java.lang.ref.ReferenceQueue.remove0(ReferenceQueue.java:143)
+  java.base@21.0.2/java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:218)
+  java.base@21.0.2/jdk.internal.ref.CleanerImpl.run(CleanerImpl.java:140)
+  java.base@21.0.2/java.lang.Thread.runWith(Thread.java:1596)
+  java.base@21.0.2/java.lang.Thread.run(Thread.java:1583)
+  java.base@21.0.2/jdk.internal.misc.InnocuousThread.run(InnocuousThread.java:186)
+
+Thread[#1,main,5,main]
+  java.base@21.0.2/jdk.internal.misc.Unsafe.park(Native Method)
+  java.base@21.0.2/java.util.concurrent.locks.LockSupport.park(LockSupport.java:371)
+  java.base@21.0.2/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:519)
+  java.base@21.0.2/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3780)
+  java.base@21.0.2/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3725)
+  java.base@21.0.2/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1707)
+  app//nextflow.util.Barrier$_awaitCompletion_closure3.doCall(Barrier.groovy:92)
+  app//nextflow.util.Barrier$_awaitCompletion_closure3.call(Barrier.groovy)
+  app//nextflow.extension.Bolts.withLock(Bolts.groovy:337)
+  app//nextflow.extension.Bolts.withLock(Bolts.groovy)
+  app//nextflow.util.Barrier.awaitCompletion(Barrier.groovy:89)
+  app//nextflow.Session.await(Session.groovy:679)
+  app//nextflow.script.ScriptRunner.await(ScriptRunner.groovy:256)
+  app//nextflow.script.ScriptRunner.execute(ScriptRunner.groovy:144)
+  app//nextflow.cli.CmdRun.run(CmdRun.groovy:376)
+  app//nextflow.cli.Launcher.run(Launcher.groovy:503)
+  app//nextflow.cli.Launcher.main(Launcher.groovy:658)
+
+Thread[#27,Notification Thread,9,system]
+
+Thread[#447,TaskFinalizer-1,5,main]
+  java.base@21.0.2/java.lang.Thread.dumpThreads(Native Method)
+  java.base@21.0.2/java.lang.Thread.getAllStackTraces(Thread.java:2521)
+  app//nextflow.util.SysHelper.dumpThreads(SysHelper.groovy:188)
+  app//nextflow.Session.abort(Session.groovy:800)
+  app//nextflow.Session.fault(Session.groovy:766)
+  app//nextflow.processor.TaskPollingMonitor.finalizeTask(TaskPollingMonitor.groovy:695)
+  app//nextflow.processor.TaskPollingMonitor.safeFinalizeTask(TaskPollingMonitor.groovy:678)
+  java.base@21.0.2/java.lang.invoke.DirectMethodHandle$Holder.invokeVirtual(DirectMethodHandle$Holder)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$MH/0x00007f4b441a8800.invoke(LambdaForm$MH)
+  java.base@21.0.2/java.lang.invoke.Invokers$Holder.invokeExact_MT(Invokers$Holder)
+  java.base@21.0.2/jdk.internal.reflect.DirectMethodHandleAccessor.invokeImpl(DirectMethodHandleAccessor.java:154)
+  java.base@21.0.2/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+  java.base@21.0.2/java.lang.reflect.Method.invoke(Method.java:580)
+  app//org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:343)
+  app//groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:328)
+  app//groovy.lang.MetaClassImpl.doInvokeMethod(MetaClassImpl.java:1333)
+  app//groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1088)
+  app//groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1007)
+  app//org.codehaus.groovy.runtime.InvokerHelper.invokePogoMethod(InvokerHelper.java:645)
+  app//org.codehaus.groovy.runtime.InvokerHelper.invokeMethod(InvokerHelper.java:628)
+  app//org.codehaus.groovy.runtime.InvokerHelper.invokeMethodSafe(InvokerHelper.java:82)
+  app//nextflow.processor.TaskPollingMonitor$_checkTaskStatus_lambda8.doCall(TaskPollingMonitor.groovy:668)
+  app//nextflow.processor.TaskPollingMonitor$$Lambda/0x00007f4b4443b278.run(Unknown Source)
+  java.base@21.0.2/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+  java.base@21.0.2/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+  java.base@21.0.2/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+  java.base@21.0.2/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+  java.base@21.0.2/java.lang.Thread.runWith(Thread.java:1596)
+  java.base@21.0.2/java.lang.Thread.run(Thread.java:1583)
+
+Thread[#51,Task submitter,5,main]
+  java.base@21.0.2/jdk.internal.misc.Unsafe.park(Native Method)
+  java.base@21.0.2/java.util.concurrent.locks.LockSupport.park(LockSupport.java:371)
+  java.base@21.0.2/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:519)
+  java.base@21.0.2/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3780)
+  java.base@21.0.2/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3725)
+  java.base@21.0.2/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1707)
+  app//nextflow.processor.TaskPollingMonitor.awaitTasks(TaskPollingMonitor.groovy:388)
+  app//nextflow.processor.TaskPollingMonitor.submitLoop(TaskPollingMonitor.groovy:412)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$DMH/0x00007f4b441ab000.invokeVirtual(LambdaForm$DMH)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$MH/0x00007f4b44324000.invoke(LambdaForm$MH)
+  java.base@21.0.2/java.lang.invoke.Invokers$Holder.invokeExact_MT(Invokers$Holder)
+  java.base@21.0.2/jdk.internal.reflect.DirectMethodHandleAccessor.invokeImpl(DirectMethodHandleAccessor.java:153)
+  java.base@21.0.2/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+  java.base@21.0.2/java.lang.reflect.Method.invoke(Method.java:580)
+  app//org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:343)
+  app//groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:328)
+  app//groovy.lang.MetaClassImpl.doInvokeMethod(MetaClassImpl.java:1333)
+  app//groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1088)
+  app//groovy.lang.MetaClassImpl.invokeMethodClosure(MetaClassImpl.java:1017)
+  app//groovy.lang.MetaClassImpl.doInvokeMethod(MetaClassImpl.java:1207)
+  app//groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1088)
+  app//groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1007)
+  app//groovy.lang.Closure.call(Closure.java:433)
+  app//groovy.lang.Closure.call(Closure.java:412)
+  app//groovy.lang.Closure.run(Closure.java:505)
+  java.base@21.0.2/java.lang.Thread.runWith(Thread.java:1596)
+  java.base@21.0.2/java.lang.Thread.run(Thread.java:1583)
+
+Thread[#57,Actor Thread 5,5,main]
+  java.base@21.0.2/jdk.internal.misc.Unsafe.park(Native Method)
+  java.base@21.0.2/java.util.concurrent.locks.LockSupport.park(LockSupport.java:371)
+  java.base@21.0.2/java.util.concurrent.LinkedTransferQueue$DualNode.await(LinkedTransferQueue.java:458)
+  java.base@21.0.2/java.util.concurrent.SynchronousQueue$Transferer.xferLifo(SynchronousQueue.java:194)
+  java.base@21.0.2/java.util.concurrent.SynchronousQueue.xfer(SynchronousQueue.java:233)
+  java.base@21.0.2/java.util.concurrent.SynchronousQueue.take(SynchronousQueue.java:316)
+  java.base@21.0.2/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1070)
+  java.base@21.0.2/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+  java.base@21.0.2/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+  java.base@21.0.2/java.lang.Thread.runWith(Thread.java:1596)
+  java.base@21.0.2/java.lang.Thread.run(Thread.java:1583)
+
+Thread[#448,Actor Thread 6,5,main]
+  java.base@21.0.2/jdk.internal.misc.Unsafe.park(Native Method)
+  java.base@21.0.2/java.util.concurrent.locks.LockSupport.park(LockSupport.java:371)
+  java.base@21.0.2/java.util.concurrent.LinkedTransferQueue$DualNode.await(LinkedTransferQueue.java:458)
+  java.base@21.0.2/java.util.concurrent.SynchronousQueue$Transferer.xferLifo(SynchronousQueue.java:194)
+  java.base@21.0.2/java.util.concurrent.SynchronousQueue.xfer(SynchronousQueue.java:233)
+  java.base@21.0.2/java.util.concurrent.SynchronousQueue.take(SynchronousQueue.java:316)
+  java.base@21.0.2/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1070)
+  java.base@21.0.2/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+  java.base@21.0.2/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+  java.base@21.0.2/java.lang.Thread.runWith(Thread.java:1596)
+  java.base@21.0.2/java.lang.Thread.run(Thread.java:1583)
+
+Thread[#50,Task monitor,5,main]
+  java.base@21.0.2/jdk.internal.misc.Unsafe.park(Native Method)
+  java.base@21.0.2/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:269)
+  java.base@21.0.2/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1847)
+  app//nextflow.processor.TaskPollingMonitor$_await_closure5.doCall(TaskPollingMonitor.groovy:529)
+  app//nextflow.processor.TaskPollingMonitor$_await_closure5.call(TaskPollingMonitor.groovy)
+  app//nextflow.extension.Bolts.withLock(Bolts.groovy:337)
+  app//nextflow.extension.Bolts.withLock(Bolts.groovy)
+  app//nextflow.processor.TaskPollingMonitor.await(TaskPollingMonitor.groovy:528)
+  app//nextflow.processor.TaskPollingMonitor.pollLoop(TaskPollingMonitor.groovy:453)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$DMH/0x00007f4b441ab000.invokeVirtual(LambdaForm$DMH)
+  java.base@21.0.2/java.lang.invoke.LambdaForm$MH/0x00007f4b44324000.invoke(LambdaForm$MH)
+  java.base@21.0.2/java.lang.invoke.Invokers$Holder.invokeExact_MT(Invokers$Holder)
+  java.base@21.0.2/jdk.internal.reflect.DirectMethodHandleAccessor.invokeImpl(DirectMethodHandleAccessor.java:153)
+  java.base@21.0.2/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+  java.base@21.0.2/java.lang.reflect.Method.invoke(Method.java:580)
+  app//org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:343)
+  app//groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:328)
+  app//groovy.lang.MetaClassImpl.doInvokeMethod(MetaClassImpl.java:1333)
+  app//groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1088)
+  app//groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1007)
+  app//org.codehaus.groovy.runtime.InvokerHelper.invokePogoMethod(InvokerHelper.java:645)
+  app//org.codehaus.groovy.runtime.InvokerHelper.invokeMethod(InvokerHelper.java:628)
+  app//org.codehaus.groovy.runtime.InvokerHelper.invokeMethodSafe(InvokerHelper.java:82)
+  app//nextflow.processor.TaskPollingMonitor$_start_closure2.doCall(TaskPollingMonitor.groovy:318)
+  app//nextflow.processor.TaskPollingMonitor$_start_closure2.call(TaskPollingMonitor.groovy)
+  app//groovy.lang.Closure.run(Closure.java:505)
+  java.base@21.0.2/java.lang.Thread.runWith(Thread.java:1596)
+  java.base@21.0.2/java.lang.Thread.run(Thread.java:1583)
+
+Thread[#434,process reaper,10,InnocuousThreadGroup]
+  java.base@21.0.2/jdk.internal.misc.Unsafe.park(Native Method)
+  java.base@21.0.2/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:410)
+  java.base@21.0.2/java.util.concurrent.LinkedTransferQueue$DualNode.await(LinkedTransferQueue.java:452)
+  java.base@21.0.2/java.util.concurrent.SynchronousQueue$Transferer.xferLifo(SynchronousQueue.java:194)
+  java.base@21.0.2/java.util.concurrent.SynchronousQueue.xfer(SynchronousQueue.java:233)
+  java.base@21.0.2/java.util.concurrent.SynchronousQueue.poll(SynchronousQueue.java:336)
+  java.base@21.0.2/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1069)
+  java.base@21.0.2/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+  java.base@21.0.2/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+  java.base@21.0.2/java.lang.Thread.runWith(Thread.java:1596)
+  java.base@21.0.2/java.lang.Thread.run(Thread.java:1583)
+  java.base@21.0.2/jdk.internal.misc.InnocuousThread.run(InnocuousThread.java:186)
+
+Mar-26 21:59:43.401 [Task monitor] DEBUG n.processor.TaskPollingMonitor - <<< barrier arrives (monitor: slurm) - terminating tasks monitor poll loop
+Mar-26 21:59:43.401 [main] DEBUG nextflow.Session - Session await > all barriers passed
+Mar-26 21:59:43.409 [main] DEBUG n.trace.WorkflowStatsObserver - Workflow completed > WorkflowStats[succeededCount=0; failedCount=1; ignoredCount=0; cachedCount=0; pendingCount=0; submittedCount=0; runningCount=0; retriesCount=0; abortedCount=0; succeedDuration=0ms; failedDuration=1d 6h 1m 48s; cachedDuration=0ms;loadCpus=0; loadMemory=0; peakRunning=1; peakCpus=10; peakMemory=0; ]
+Mar-26 21:59:43.626 [main] DEBUG nextflow.cache.CacheDB - Closing CacheDB done
+Mar-26 21:59:43.654 [main] DEBUG nextflow.script.ScriptRunner - > Execution complete -- Goodbye
