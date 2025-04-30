@@ -3,34 +3,27 @@
 nextflow.enable.dsl=2
 
 process qc_post_alignment {
-    // Define inputs:
+    clusterOptions = { 
+        "--output=RNAseQC_${SRR}.out --error=RNAseQC_${SRR}.err" 
+    }
+    publishDir "results/QC_post_alignment", pattern: "*.metrics.tsv"
+    publishDir "results/logs/RNAseQC", pattern: "*.{out,err}"
+    
     input:
-    path star_sample_dir from channel.fromPath("${params.out_dir}/STAR_alignment/*/")
+    tuple val(SRR), path(bam_file)
 
-    // Define output: rnaseQC quality control of the STAR alignment outputs
     output:
-    path "${params.out_dir}/rnaseQC_metrics/${star_sample_dir.name}/*"
+    path "*.metrics.tsv"
+    path "*.{out,err}"
 
-    // Define the script
     script:
     """
-    # Create the log dir
-    mkdir -p ${params.out_dir}/logs/qc_post_alignment
-    
-    # Load the module for RNAseQC
     module load RNA-SeQC
 
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] Processing sample: ${star_sample_dir.name}"
+    echo "[\$(date '+%Y-%m-%d %H:%M:%S')] Processing sample: ${SRR}"
 
-    # Output directory
-    out_dir="${params.out_dir}/rnaseQC_metrics/${star_sample_dir.name}"
-    mkdir -p $out_dir
+    rnaseqc ${params.rnaseQC.collapsed_gtf_file} ${bam_file} --sample ${SRR} --stranded rf --verbose .
 
-    # Star .bam file sorted by coordinates
-    star_bam_file="${star_sample_dir}/${star_sample_dir.name}/${star_sample_dir.name}_Aligned.sortedByCoord.out.bam"
-
-    rnaseqc ${params.rnaseQC.collapsed_gtf_file} ${star_bam_file} --sample ${star_sample_dir.name} --stranded rf --verbose ${out_dir}/
-
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] RNAseQC of sample ${star_sample_dir.name} done"
+    echo "[\$(date '+%Y-%m-%d %H:%M:%S')] RNAseQC of sample ${SRR} done"
     """
 }

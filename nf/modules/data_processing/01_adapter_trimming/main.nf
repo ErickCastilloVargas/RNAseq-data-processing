@@ -4,7 +4,7 @@ nextflow.enable.dsl=2
 
 process adapters_trimming {
     clusterOptions = { 
-        "--cpus-per-task=${params.trimmomatic.threads} --output=trimmomatic_trimming_${SRR}.out --error=trimmomatic_trimming_${SRR}.err" 
+        "--output=trimmomatic_trimming_${SRR}.out --error=trimmomatic_trimming_${SRR}.err" 
     }
     publishDir "results/trimmomatic_adapter_trimming", pattern: "*_{1,2}_paired.fastq.gz"
     publishDir "results/logs/adapter_trimming", pattern: "*.{out,err}"

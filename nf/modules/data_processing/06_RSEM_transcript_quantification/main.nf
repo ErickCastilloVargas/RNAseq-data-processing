@@ -3,44 +3,38 @@
 nextflow.enable.dsl=2
 
 process rsem_transcript_quantification {
-    // Define inputs:
-    input:
-    path star_sample_dir from channel.fromPath("${params.out_dir}/STAR_alignment/*/")
-    path rsem_index from channel.fromPath(${params.out_dir}/rsem_index)
+    clusterOptions = { 
+        "--output=RSEM_${SRR}.out --error=RSEM_${SRR}.err" 
+    }
+    publishDir "results/RSEM_transcript_quant", pattern: "*.genes.results"
+    publishDir "results/logs/RSEM", pattern: "*.{out,err}"
 
-    // Define output: RSEM transcript quantification
+    input:
+    tuple val(SRR), path(bam_file)
+    path rsem_index
+
     output:
-    path "${params.out_dir}/rsem_quantification/${star_sample_dir.name}/*"
+    path "*.genes.results"
+    path "*.{out,err}"
 
     // Define the script
     script:
     """
-    # Create the log dir
-    mkdir -p ${params.out_dir}/logs/rsem_transcript_quantification
-
-    # Load the module for RSEM
     module load RSEM
 
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] Processing sample: ${star_sample_dir.name}"
+    echo "[\$(date '+%Y-%m-%d %H:%M:%S')] Processing sample: ${SRR}"
 
-    # STAR .bam file aligned to transcriptome
-    star_bam_file="${star_sample_dir}/${star_sample_dir.name}/${star_sample_dir.name}_Aligned.toTranscriptome.out.bam"
+    rsem-calculate-expression \\
+        --num-threads ${params.rsem.threads} \\
+        --fragment-length-max 1000 \\
+        --append-names \\
+        --no-bam-output \\
+        --paired-end \\
+        --estimate-rspd \\
+        --alignments \\
+        ${bam_file} \\
+        ${rsem_index}/rsem_reference
 
-    # Create the output dir
-    out_dir="${params.out_dir}/rsem_quantification/${star_sample_dir.name}"
-    mkdir -p $out_dir
-
-    rsem-calculate-expression \
-        --num-threads ${params.rsem.threads} \
-        --fragment-length-max 1000 \
-        --append-names \
-        --no-bam-output \
-        --paired-end \
-        --estimate-rspd \
-        --alignments \
-        ${star_bam_file} \
-        ${rsem_index}/rsem_reference ${out_dir}/${star_sample_dir.name}
-
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] Transcript quantification for sample ${star_sample_dir.name} finished"
+    echo "[\$(date '+%Y-%m-%d %H:%M:%S')] Transcript quantification for sample ${SRR} finished"
     """
 }

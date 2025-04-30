@@ -4,7 +4,7 @@ nextflow.enable.dsl=2
 
 process fastQC_post_trimming {
     clusterOptions = { 
-        "--cpus-per-task=${params.fastQC.threads} --output=post_trimming_fastQC_${SRR}.out --error=post_trimming_fastQC_${SRR}.err"
+        "--output=post_trimming_fastQC_${SRR}.out --error=post_trimming_fastQC_${SRR}.err"
     }
     publishDir "results/fastQC_reports_post_trimming", pattern: "*.{html,zip}"
     publishDir "results/logs/fastQC_post_trimming", pattern: "*.{out,err}"
@@ -32,7 +32,7 @@ process fastQC_post_trimming {
 }
 
 process multiQC_post_trimming {
-    clusterOptions = "--cpus-per-task=${params.fastQC.threads} --output=post_trimming_multiQC.out --error=post_trimming_multiQC.err"
+    clusterOptions = "--output=post_trimming_multiQC.out --error=post_trimming_multiQC.err"
 
     publishDir "results/multiQC_reports_post_trimming", pattern: "*.html"
     publishDir "results/logs/multiQC_post_trimming", pattern: "*.{out,err}"

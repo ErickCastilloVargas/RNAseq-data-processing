@@ -4,7 +4,7 @@ nextflow.enable.dsl=2
 
 process star_alignment {
     clusterOptions = { 
-        "--cpus-per-task=${params.STAR.threads} --output=STAR_${SRR}.out --error=STAR_${SRR}.err" 
+        "--output=STAR_${SRR}.out --error=STAR_${SRR}.err" 
     }
     publishDir "results/STAR_alignment", pattern: "*.out.bam"
     publishDir "results/logs/STAR", pattern: "*.{out,err}"
@@ -15,8 +15,8 @@ process star_alignment {
 
     output:
     tuple val(SRR), path("*.out.bam"), emit: "bam_files"
+    path "*.{out,err}"
 
-    // Define the script
     script:
     """
     module load STAR
@@ -61,7 +61,7 @@ process star_alignment {
 
 process star_alignment_no_adapter_trimming {
     clusterOptions = { 
-        "--cpus-per-task=${params.STAR.threads} --output=STAR_${SRR}.out --error=STAR_${SRR}.err" 
+        "--output=STAR_${SRR}.out --error=STAR_${SRR}.err" 
     }
     publishDir "results/STAR_alignment", pattern: "*.out.bam"
     publishDir "results/logs/STAR", pattern: "*.{out,err}"
@@ -73,6 +73,7 @@ process star_alignment_no_adapter_trimming {
 
     output:
     tuple val(SRR), path("*.out.bam"), emit: "bam_files"
+    path "*.{out,err}"
 
     // Define the script
     script:
