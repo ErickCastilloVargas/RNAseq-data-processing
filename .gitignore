@@ -10,7 +10,7 @@ results/*
 # Ignore log and temp files
 *.log
 *.tmp
-.nextflow/
+.nextflow*
 work/
 
 # Ignore environment files
