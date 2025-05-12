@@ -6,8 +6,8 @@ process fastQC_post_trimming {
     clusterOptions = { 
         "--output=post_trimming_fastQC_${SRR}.out --error=post_trimming_fastQC_${SRR}.err"
     }
-    publishDir "results/fastQC_reports_post_trimming", pattern: "*.{html,zip}"
-    publishDir "results/logs/fastQC_post_trimming", pattern: "*.{out,err}"
+    publishDir "${params.outDir}/fastQC_reports_post_trimming", pattern: "*.{html,zip}"
+    publishDir "${params.outDir}/logs/fastQC_post_trimming", pattern: "*.{out,err}"
     
     input:
     tuple val(SRR), path(fastq_files)
@@ -21,21 +21,21 @@ process fastQC_post_trimming {
     """
     module load FastQC
     
-    echo "[\$(date '+%Y-%m-%d %H:%M:%S')] Processing sample: ${SRR}"
+    echo "[\$(date '+%Y-%m-%d %H:%M:%S')] Processing sample: $SRR"
     
-    fastqc -t ${params.fastQC.threads} \\
+    fastqc -t $params.fastQC_threads \\
         $fastq_files \\
         -o .
     
-    echo "[\$(date '+%Y-%m-%d %H:%M:%S')] FastQC of post trimming sample ${SRR} done"
+    echo "[\$(date '+%Y-%m-%d %H:%M:%S')] FastQC of post trimming sample $SRR done"
     """
 }
 
 process multiQC_post_trimming {
     clusterOptions = "--output=post_trimming_multiQC.out --error=post_trimming_multiQC.err"
 
-    publishDir "results/multiQC_reports_post_trimming", pattern: "*.html"
-    publishDir "results/logs/multiQC_post_trimming", pattern: "*.{out,err}"
+    publishDir "${params.outDir}/multiQC_reports_post_trimming", pattern: "*.html"
+    publishDir "${params.outDir}/logs/multiQC_post_trimming", pattern: "*.{out,err}"
 
     input:
     path fastQC_reports

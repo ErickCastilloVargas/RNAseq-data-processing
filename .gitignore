@@ -1,7 +1,7 @@
 # Ignore everthing inside these dirs
 data/raw/*
 data/reference/*
-results/*
+results/
 
 !data/raw/.gitkeep
 !data/reference/.gitkeep
@@ -12,6 +12,7 @@ results/*
 *.tmp
 .nextflow*
 work/
+null/
 
 # Ignore environment files
 .DS_Store

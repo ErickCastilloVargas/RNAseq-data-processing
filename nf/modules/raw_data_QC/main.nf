@@ -4,11 +4,11 @@ nextflow.enable.dsl=2
 
 process fastQC_raw_data {
     clusterOptions = { 
-        "--cpus-per-task=${params.fastQC.threads} --output=raw_fastQC_${SRR}.out --error=raw_fastQC_${SRR}.err" 
+        "--output=raw_fastQC_${SRR}.out --error=raw_fastQC_${SRR}.err" 
     }
 
-    publishDir "results/fastQC_reports_raw_data", pattern: "*.{html,zip}"
-    publishDir "results/logs/fastQC_raw_data", pattern: "*.{out,err}"
+    publishDir "${params.outdir}/fastQC_reports_raw_data", pattern: "*.{html,zip}"
+    publishDir "${params.outdir}/logs/fastQC_raw_data", pattern: "*.{out,err}"
 
     input:
     tuple val(SRR), path(fastq_files)
@@ -22,21 +22,23 @@ process fastQC_raw_data {
     """
     module load FastQC
     
-    echo "[\$(date '+%Y-%m-%d %H:%M:%S')] Processing sample: ${SRR}"
+    echo "[\$(date '+%Y-%m-%d %H:%M:%S')] Processing sample: $SRR"
     
-    fastqc -t ${params.fastQC.threads} \\
+    fastqc -t $params.fastQC_threads \\
         $fastq_files \\
         -o .
     
-    echo "[\$(date '+%Y-%m-%d %H:%M:%S')] FastQC of raw sample ${SRR} done"
+    echo "[\$(date '+%Y-%m-%d %H:%M:%S')] FastQC of raw sample $SRR done"
     """
 }
 
 process multiQC_raw_data {
-    clusterOptions = "--cpus-per-task=${params.fastQC.threads} --output=raw_data_multiQC.out --error=raw_data_multiQC.err"
+    clusterOptions = {
+        "--output=raw_data_multiQC.out --error=raw_data_multiQC.err"
+    }
 
-    publishDir "results/multiQC_reports_raw_data", pattern: "*.html"
-    publishDir "results/logs/multiQC_raw_data", pattern: "*.{out,err}"
+    publishDir "${params.outdir}/multiQC_reports_raw_data", pattern: "*.html"
+    publishDir "${params.outdir}/logs/multiQC_raw_data", pattern: "*.{out,err}"
 
     input:
     path fastQC_reports

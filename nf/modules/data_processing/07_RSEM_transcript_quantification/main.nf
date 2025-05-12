@@ -6,8 +6,8 @@ process rsem_transcript_quantification {
     clusterOptions = { 
         "--output=RSEM_${SRR}.out --error=RSEM_${SRR}.err" 
     }
-    publishDir "results/RSEM_transcript_quant", pattern: "*.genes.results"
-    publishDir "results/logs/RSEM", pattern: "*.{out,err}"
+    publishDir "${params.outDir}/RSEM_transcript_quant", pattern: "*.genes.results"
+    publishDir "${params.outDir}/logs/RSEM", pattern: "*.{out,err}"
 
     input:
     tuple val(SRR), path(bam_file)
@@ -22,19 +22,20 @@ process rsem_transcript_quantification {
     """
     module load RSEM
 
-    echo "[\$(date '+%Y-%m-%d %H:%M:%S')] Processing sample: ${SRR}"
+    echo "[\$(date '+%Y-%m-%d %H:%M:%S')] Processing sample: $SRR"
 
     rsem-calculate-expression \\
-        --num-threads ${params.rsem.threads} \\
+        --num-threads $params.rsem_threads \\
         --fragment-length-max 1000 \\
         --append-names \\
         --no-bam-output \\
         --paired-end \\
         --estimate-rspd \\
         --alignments \\
-        ${bam_file} \\
-        ${rsem_index}/rsem_reference
+        $bam_file \\
+        ${rsem_index}/hg38 \\
+        $SRR
 
-    echo "[\$(date '+%Y-%m-%d %H:%M:%S')] Transcript quantification for sample ${SRR} finished"
+    echo "[\$(date '+%Y-%m-%d %H:%M:%S')] Transcript quantification for sample $SRR finished"
     """
 }
