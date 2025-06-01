@@ -7,8 +7,8 @@ process fastQC_raw_data {
         "--output=raw_fastQC_${SRR}.out --error=raw_fastQC_${SRR}.err" 
     }
 
-    publishDir "${params.outdir}/fastQC_reports_raw_data", pattern: "*.{html,zip}"
-    publishDir "${params.outdir}/logs/fastQC_raw_data", pattern: "*.{out,err}"
+    publishDir "${params.outDir}/fastQC_reports_raw_data", pattern: "*.{html,zip}"
+    publishDir "${params.outDir}/logs/fastQC_raw_data", pattern: "*.{out,err}"
 
     input:
     tuple val(SRR), path(fastq_files)
