@@ -1,4 +1,4 @@
-# RNA-seq Processing Pipeline
+# RNA-seq Data Processing Pipeline
 
 > **Project status**: Work in Progress 🚧
 >
