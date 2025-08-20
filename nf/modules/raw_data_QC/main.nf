@@ -3,27 +3,18 @@
 nextflow.enable.dsl=2
 
 process fastQC_raw_data {
-    clusterOptions = { 
-        "--output=raw_fastQC_${SRR}.out --error=raw_fastQC_${SRR}.err" 
-    }
-
-    publishDir "${params.outDir}/fastQC_reports_raw_data", pattern: "*.{html,zip}"
-    publishDir "${params.outDir}/logs/fastQC_raw_data", pattern: "*.{out,err}"
+    tag "$SRR"
 
     input:
     tuple val(SRR), path(fastq_files)
 
     output:
     path "*.zip", emit: "zip_files"
-    path "*.html"
-    path "*.{out,err}"
+
+    module "FastQC"
 
     script:
     """
-    module load FastQC
-    
-    echo "[\$(date '+%Y-%m-%d %H:%M:%S')] Processing sample: $SRR"
-    
     fastqc -t $params.fastQC_threads \\
         $fastq_files \\
         -o .
@@ -33,28 +24,18 @@ process fastQC_raw_data {
 }
 
 process multiQC_raw_data {
-    clusterOptions = {
-        "--output=raw_data_multiQC.out --error=raw_data_multiQC.err"
-    }
-
-    publishDir "${params.outdir}/multiQC_reports_raw_data", pattern: "*.html"
-    publishDir "${params.outdir}/logs/multiQC_raw_data", pattern: "*.{out,err}"
+    publishDir "${params.outDir}/Reports/raw_data", mode:"copy", pattern: "*.html"
 
     input:
     path fastQC_reports
 
     output:
     path "*.html"
-    path "*.{out,err}"
+
+    module "MultiQC"
 
     script:
     """
-    module load MultiQC
-
-    echo "[\$(date '+%Y-%m-%d %H:%M:%S')] Starting multiQC of raw data ..."
-
     multiqc $fastQC_reports -n multiQC_report_raw_data
-
-    echo "[\$(date '+%Y-%m-%d %H:%M:%S')] MultiQC of raw data done"
     """
 }

@@ -1,0 +1,17 @@
+custom_data:
+  full_strandness:            
+    section_name: "Strandness Inference"  
+    description: "Inference of the strandness of each sample provided by Salmon"
+    file_format: "tsv"        
+    plot_type: "table"
+  RNAseQC_metrics:
+    section_name: "QC of the alignment"  
+    description: "QC of the alignment done with STAR"
+    file_format: "tsv"        
+    plot_type: "table"
+
+sp:
+  full_strandness:
+    fn: "full_strandness_inference.tsv"
+  RNAseQC_metrics:
+    fn: "rnaseqc_metrics_full.tsv"

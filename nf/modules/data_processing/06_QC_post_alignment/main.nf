@@ -2,33 +2,50 @@
 
 nextflow.enable.dsl=2
 
-process qc_post_alignment {
-    clusterOptions = { 
-        "--output=RNAseQC_${SRR}.out --error=RNAseQC_${SRR}.err" 
-    }
-    publishDir "${params.outDir}/QC_post_alignment", pattern: "*.metrics.tsv"
-    publishDir "${params.outDir}/logs/RNAseQC", pattern: "*.{out,err}"
-    
+process collapsed_gtf {
+    tag "Collapse_gtf_file"
+
+    container "file://${projectDir}/containers/collapse_annotation.sif"
+
     input:
-    tuple val(SRR), path(bam_file)
+    path gtf
 
     output:
-    path "*.metrics.tsv"
-    path "*.{out,err}"
+    path "annotation.collapsed_only.gtf"
+
+    module "Apptainer"
 
     script:
     """
-    module load RNA-SeQC
-    module load SAMtools
+    input_gtf=$gtf
+    filename=\$(basename $gtf)
+    extension=\${filename##*.}
+    if [[ \$extension == "gz" ]]; then
+        gzip -d \$input_gtf > annotation.gtf
+        input_gtf=annotation.gtf
+    fi
 
-    echo "[\$(date '+%Y-%m-%d %H:%M:%S')] Processing sample: $SRR"
+    collapse_annotation.py \\
+        --collapse_only \$input_gtf \\
+        annotation.collapsed_only.gtf
+    """
+}
 
-    echo "[\$(date '+%Y-%m-%d %H:%M:%S')] Creating the index BAM file"
+process qc_post_alignment {
+    tag "$SRR"
 
+    input:
+    tuple val(SRR), path(bam_file)
+    path collapse_gtf
+
+    output:
+    path "*.metrics.tsv", emit: "rnaseqc_metrics"
+
+    module "RNA-SeQC:SAMtools"
+
+    script:
+    """
     samtools index $bam_file
-
-    rnaseqc $params.gtfCollapsed $bam_file --sample $SRR --stranded rf --verbose .
-
-    echo "[\$(date '+%Y-%m-%d %H:%M:%S')] RNAseQC of sample $SRR done"
+    rnaseqc $collapse_gtf $bam_file --sample $SRR --stranded rf --verbose .
     """
 }
