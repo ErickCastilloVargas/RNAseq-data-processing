@@ -13,7 +13,7 @@ results/
 .nextflow*
 work/
 null/
-report[0-9]*
+report-[0-9]*
 
 # Ignore environment files
 .DS_Store

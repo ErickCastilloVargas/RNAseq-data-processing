@@ -24,7 +24,7 @@ process fastQC_raw_data {
 }
 
 process multiQC_raw_data {
-    publishDir "${params.outDir}/Reports/raw_data", mode:"copy", pattern: "*.html"
+    publishDir "${params.outDir}/Reports/raw_data", mode:"move", pattern: "*.html"
 
     input:
     path fastQC_reports
