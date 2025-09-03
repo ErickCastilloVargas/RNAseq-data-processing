@@ -11,7 +11,7 @@ include { star_alignment } from "../modules/data_processing/04_STAR_alignment"
 include { samtools_sort_by_coordinates } from "../modules/data_processing/05_Sort_by_coordinates"
 include { qc_post_alignment; collapsed_gtf } from "../modules/data_processing/06_QC_post_alignment"
 include { rsem_transcript_quantification } from "../modules/data_processing/07_RSEM_transcript_quantification"
-include { get_bam_files } from "../modules/data_processing/get_BAM_files"
+include { get_alignment_files } from "../modules/data_processing/get_alignment_files"
 include { multiQC_report_post_alignment; agregate_rnaseqc_metrics } from "../modules/data_processing/report_post_alignment"
 
 workflow {
@@ -51,8 +51,8 @@ workflow {
     // SAMtools sort by coordinates
     samtools_sort_by_coordinates(star_alignment.out.unsorted_bam_files)
 
-    if (params.getBAM) {
-        get_bam_files(samtools_sort_by_coordinates.out.sorted_bam_files, genome_ch.first())
+    if (params.getAlignments) {
+        get_alignment_files(samtools_sort_by_coordinates.out.sorted_bam_files, genome_ch.first())
     }
 
     // QC after alignment

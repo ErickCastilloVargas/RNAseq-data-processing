@@ -2,13 +2,13 @@
 
 nextflow.enable.dsl=2
 
-process get_bam_files {
+process get_alignment_files {
     tag "$SRR"
 
-    publishDir "${params.outDir}/BAM_files", mode: "move", pattern: "*.cram"
+    publishDir "${params.outDir}/Alignment_files", mode: "move", pattern: "*.cram"
 
     when:
-    params.getBAM
+    params.getAlignments
     
     input:
     tuple val(SRR), path(bam_file)
