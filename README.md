@@ -2,6 +2,8 @@
 
 This repository provides a Nextflow-based workflow for processing RNA-seq pair-end data on HPC clusters (Slurm), from raw FASTQ files to gene-level count matrices. The pipeline includes comprehensive quality control (QC) before and after the alignments.
 
+<img width="1420" height="785" alt="Workflow diagram" src="https://github.com/user-attachments/assets/33621faf-29f5-4dd3-8804-ecdfb919885c" />
+
 ### Features
 
 1. **Initial QC (Raw Data)**
