@@ -19,28 +19,50 @@ process build_salmon_index {
     """
 }
 
-process infer_strandness {
+process salmon_quant {
     tag "$SRR"
-
+    
+    publishDir "${params.outDir}/salmon_quant",
+        mode: "copy",
+        pattern: "*_quant.sf",
+        enabled: params.pseudoAligner == "salmon"
+    
     input:
     path salmon_index
     tuple val(SRR), path(fastq_files)
 
     output:
-    tuple val(SRR), path("${SRR}_strandness.txt")
+    path "${SRR}_quant.sf"
+    tuple val(SRR), path("${SRR}_salmon_out/${SRR}_lib_format_counts.json"), emit: "lib_format_counts"
 
     module "Salmon"
 
     script:
     """
     salmon quant \\
-        -i salmon_index \\
+        -i $salmon_index \\
         -l A \\
         -p $params.salmon_quant_threads \\
         -1 ${fastq_files[0]} \\
         -2 ${fastq_files[1]} \\
         -o ${SRR}_salmon_out
+    mv ${SRR}_salmon_out/quant.sf ${SRR}_salmon_out/${SRR}_quant.sf
+    mv ${SRR}_salmon_out/${SRR}_quant.sf ${SRR}_quant.sf
+    mv ${SRR}_salmon_out/lib_format_counts.json ${SRR}_salmon_out/${SRR}_lib_format_counts.json
+    """
+}
 
+process infer_strandness {
+    tag "$SRR"
+
+    input:
+    tuple val(SRR), path(lib_format_counts)
+
+    output:
+    tuple val(SRR), path("${SRR}_strandness.txt")
+
+    script:
+    """
     jq -r "
         [
             .expected_format,
@@ -51,7 +73,7 @@ process infer_strandness {
             .num_frags_with_inconsistent_or_orphan_mappings,
             .strand_mapping_bias
         ] | @tsv
-    " ${SRR}_salmon_out/lib_format_counts.json > ${SRR}_strandness.txt
+    " $lib_format_counts > ${SRR}_strandness.txt
     """
 }
 
