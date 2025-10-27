@@ -34,6 +34,7 @@ process salmon_quant {
     output:
     path "${SRR}_quant.sf"
     tuple val(SRR), path("${SRR}_salmon_out/${SRR}_lib_format_counts.json"), emit: "lib_format_counts"
+    tuple val(SRR), path("${SRR}_salmon_out/${SRR}_meta_info.json"), emit: "mapping_rate_info"
 
     module "Salmon"
 
@@ -49,6 +50,7 @@ process salmon_quant {
     mv ${SRR}_salmon_out/quant.sf ${SRR}_salmon_out/${SRR}_quant.sf
     mv ${SRR}_salmon_out/${SRR}_quant.sf ${SRR}_quant.sf
     mv ${SRR}_salmon_out/lib_format_counts.json ${SRR}_salmon_out/${SRR}_lib_format_counts.json
+    mv ${SRR}_salmon_out/meta_info.json ${SRR}_salmon_out/${SRR}_meta_info.json
     """
 }
 
@@ -98,6 +100,60 @@ process merge_strandness_results {
         sample="\${samples[idx]}"
         values=\$(cat "\$file")
         echo -e "\$sample\\t\$values" >> full_strandness_inference.tsv
+    done
+    """
+}
+
+
+
+
+
+
+process mapping_rate {
+    tag "$SRR"
+
+    input:
+    tuple val(SRR), path(mapping_rate_info)
+
+    output:
+    tuple val(SRR), path("${SRR}_mapping_rate.txt")
+
+    script:
+    """
+    jq -r "
+        [
+            .percent_mapped,
+            .num_processed,
+            .num_mapped,
+            .num_decoy_fragments,
+            .num_dovetail_fragments,
+            .num_fragments_filtered_vm
+        ] | @tsv
+    " $mapping_rate_info > ${SRR}_mapping_rate.txt
+    """
+}
+
+process merge_mapping_rates {
+    tag "merge_mapping_rate_info"
+
+    input:
+    val srr_list
+    path mapping_rate_files
+
+    output:
+    path "full_mapping_rate_info.tsv"
+
+    script:
+    """
+    echo -e "Sample\\tmapping_rate\\tnum_processed_fragments\\tnum_mapped_fragments\\tnum_decoy_fragments\\tnum_dovetail_fragments\\tnum_fragments_filtered_vm" > full_mapping_rate_info.tsv
+
+    mapping_files=(${mapping_rate_files.join(" ")})
+    samples=(${srr_list.join(" ")})
+    for idx in "\${!mapping_files[@]}"; do
+        file="\${mapping_files[idx]}"
+        sample="\${samples[idx]}"
+        values=\$(cat "\$file")
+        echo -e "\$sample\\t\$values" >> full_mapping_rate_info.tsv
     done
     """
 }

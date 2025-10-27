@@ -4,6 +4,11 @@ custom_data:
     description: "Inference of the strandness of each sample provided by Salmon"
     file_format: "tsv"        
     plot_type: "table"
+  mapping_rate_info:
+    section-name: "Mapping information stats"
+    description: "Mapping information statistics of the pseudo-alignment with Salmon of each sample"
+    file_format: "tsv"
+    plot_type: "table"
   RNAseQC_metrics:
     section_name: "QC of the alignment"  
     description: "QC of the alignment done with STAR"
@@ -13,5 +18,7 @@ custom_data:
 sp:
   full_strandness:
     fn: "full_strandness_inference.tsv"
+  mapping_rate_info:
+    fn: "full_mapping_rate_info.tsv"
   RNAseQC_metrics:
     fn: "rnaseqc_metrics_full.tsv"

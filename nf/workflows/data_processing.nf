@@ -3,7 +3,7 @@
 nextflow.enable.dsl=2
 
 // Include all modules
-include { build_salmon_index; salmon_quant; infer_strandness; merge_strandness_results } from "../modules/data_processing/00_Salmon"
+include { build_salmon_index; salmon_quant; infer_strandness; merge_strandness_results; mapping_rate; merge_mapping_rates } from "../modules/data_processing/00_Salmon"
 include { adapters_trimming } from "../modules/data_processing/01_adapter_trimming"
 include { fastQC_post_trimming } from "../modules/data_processing/02_QC_post_trimming"
 include { star_and_RSEM_index_building } from "../modules/data_processing/03_STAR_and_RSEM_index_building"
@@ -42,6 +42,14 @@ workflow {
     strandness_files_ch = infer_strandness.out.map{ tuple -> tuple[1] }
     merge_strandness_results(strandness_SRR_ch.collect(), strandness_files_ch.collect())
 
+    mapping_rate_info_ch = Channel.empty()
+    if (params.pseudoAligner == "Salmon") {
+        mapping_rate(salmon_quant.out.mapping_rate_info)
+        mapping_rate_SRR_ch = mapping_rate.out.map{ tuple -> tuple[0] }
+        mapping_rate_files_ch = mapping_rate.out.map{ tuple -> tuple[1] }
+        mapping_rate_info_ch = merge_mapping_rates(mapping_rate_SRR_ch.collect(), mapping_rate_files_ch.collect())
+    }
+
     // STAR alignment and RSEM quantification if alignment is not skipped
     def rnaseq_metrics_ch = Channel.empty()
     if (!params.skipAlignment) {
@@ -74,5 +82,5 @@ workflow {
     }
 
     // Final QC report
-    multiQC_final_report(rnaseq_metrics_ch, fastqc_trimmed_ch, merge_strandness_results.out)
+    multiQC_final_report(rnaseq_metrics_ch, fastqc_trimmed_ch, merge_strandness_results.out, mapping_rate_info_ch)
 }
